@@ -1,36 +1,48 @@
 package com.efgh.avraelayout.ui.sections;
 
-import com.jfoenix.controls.JFXButton;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class Header extends HBox {
-    public Header(){
-        setHeight(5);
-        setPadding(new Insets(5, 12, 5, 12));
-        setStyle("-fx-background-color: DARKRED");
+    public Header(Stage primaryStage) {
+        getStylesheets().add(getClass().getResource("/css/header.css").toExternalForm());
+        getStyleClass().add("hbox");
 
         final Pane spacer = new Pane();
         setHgrow(spacer, Priority.ALWAYS);
         spacer.setMinSize(5, 1);
 
-        final JFXButton right = new JFXButton("Right");
+        FontAwesomeIconView configIcon = createBarIconButton(FontAwesomeIcon.COG);
+        configIcon.setFill(Color.WHITE);
+        configIcon.getStyleClass().add("config");
+        configIcon.setOnMouseClicked(e -> System.out.println("configure stuff"));
 
-        FontAwesomeIconView thumbsDownIcon = new FontAwesomeIconView();
-        thumbsDownIcon.setStyleClass("thumbs-down-icon");
-        thumbsDownIcon.setOnMouseClicked(e -> System.out.println("close"));
-        getChildren().addAll(spacer, thumbsDownIcon);
+        Label title = new Label("Rollverlay");
+        title.setTextFill(Color.WHITE);
+        title.setEffect(new Glow(10));
 
-        /*`
-        Button buttonCurrent = new Button("Current");
-        buttonCurrent.setPrefSize(100, 20);
+        FontAwesomeIconView closeIcon = createBarIconButton(FontAwesomeIcon.TIMES_CIRCLE);
+        closeIcon.setOnMouseClicked(e -> System.exit(0));
 
-        Button buttonProjected = new Button("Projected");
-        buttonProjected.setPrefSize(100, 20);
-        getChildren().addAll(buttonCurrent, buttonProjected);
-        */
+        FontAwesomeIconView minimizeIcon = createBarIconButton(FontAwesomeIcon.MINUS_CIRCLE);
+        minimizeIcon.setOnMouseClicked(e -> primaryStage.setIconified(true));
+
+        getChildren().addAll(configIcon, title, spacer, minimizeIcon, closeIcon);
+
+        setCursor(Cursor.MOVE);
+    }
+
+    private FontAwesomeIconView createBarIconButton(FontAwesomeIcon icon) {
+        FontAwesomeIconView createdIconButton = new FontAwesomeIconView(icon);
+        createdIconButton.setCursor(Cursor.HAND);
+        return createdIconButton;
     }
 }

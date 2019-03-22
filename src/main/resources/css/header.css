@@ -1,0 +1,35 @@
+.root {
+    -icons-color: black;
+    -icons-color-hover: white;
+}
+
+.hbox {
+    -fx-background-color: DARKRED;
+    -fx-padding: 5;
+    -fx-spacing: 3;
+}
+
+.glyph-icon {
+    -fx-text-fill: -icons-color;
+    -fx-fill: -icons-color;
+    -glyph-size: 13px;
+}
+
+.glyph-icon:hover {
+    -fx-text-fill: -icons-color-hover;
+    -fx-fill: -icons-color-hover;
+}
+
+.glyph-icon:pressed {
+    -fx-text-fill: -icons-color;
+    -fx-fill: -icons-color;
+}
+
+.config {
+    -fx-text-fill: -icons-color-hover;
+    -fx-fill: -icons-color-hover;
+}
+
+.config:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1.0), 10, 0, 0, 0);
+}
