@@ -8,7 +8,6 @@ import javafx.scene.effect.Glow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class Header extends HBox {
@@ -20,12 +19,11 @@ public class Header extends HBox {
         spacer.setMinSize(5, 1);
 
         FontAwesomeIconView configIcon = createBarIconButton(FontAwesomeIcon.COG);
-        configIcon.setFill(Color.WHITE);
         configIcon.getStyleClass().add("config-icon");
         configIcon.setOnMouseClicked(e -> System.out.println("configure stuff"));
 
         Label title = new Label("Rollverlay");
-        title.setTextFill(Color.WHITE);
+        title.getStyleClass().add("title-bar");
         title.setEffect(new Glow(10));
 
         FontAwesomeIconView closeIcon = createBarIconButton(FontAwesomeIcon.TIMES_CIRCLE);

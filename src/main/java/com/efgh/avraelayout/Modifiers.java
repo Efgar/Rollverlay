@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui;
+package com.efgh.avraelayout;
 
 public class Modifiers {
     private static Boolean IS_ADVANTAGE = Boolean.FALSE;

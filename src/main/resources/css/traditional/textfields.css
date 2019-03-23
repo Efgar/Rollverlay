@@ -1,0 +1,13 @@
+.manual-modifiers {
+    -fx-fill: white;
+    -fx-font-size: 8pt;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: white;
+    -jfx-size: 5.0;
+    -fx-max-width: 25;
+    -fx-padding: 0;
+    -fx-alignment: center;
+    -jfx-focus-color: white;
+    -jfx-unfocus-color: white;
+    -fx-prompt-text-fill: black;
+}

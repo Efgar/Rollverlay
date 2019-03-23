@@ -1,0 +1,11 @@
+.main-action{
+    -fx-background-color: RED; 
+    -fx-text-fill:WHITE;
+    -fx-font-weight:bold;
+}
+
+.secondary-action{
+    -fx-background-color: BLACK; 
+    -fx-text-fill:WHITE;
+    -fx-font-weight:bold;
+}

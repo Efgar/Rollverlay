@@ -1,0 +1,11 @@
+.jfx-toggle-node {
+    -jfx-toggle-color: WHITE;
+    -fx-padding: 5;
+    -fx-background-radius: 50%;
+    -fx-alignment: center;
+}
+
+.jfx-toggle-node-icon {
+    -glyph-size: 16px;
+    -fx-alignment: center;
+}

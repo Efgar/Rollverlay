@@ -1,15 +1,12 @@
-.hbox {
+.hbox, .rolling-bar {
     -fx-background-color: DARKRED;
     -fx-padding: 5;
     -fx-spacing: 3;
 }
 
-.vbox {
-    -fx-background-color: DARKRED;
-    -fx-padding: 5;
-    -fx-spacing: 5;
+.rolling-bar {
     -fx-border-color: RED;
     -fx-border-style: solid;
-
-    -fx-border-width: 3 0 0 0
+    -fx-border-width: 3 0 0 0;
+    -fx-spacing: 7;
 }
