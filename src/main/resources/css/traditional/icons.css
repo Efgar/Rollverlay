@@ -3,12 +3,6 @@
     -icons-color-hover: white;
 }
 
-.hbox {
-    -fx-background-color: DARKRED;
-    -fx-padding: 5;
-    -fx-spacing: 3;
-}
-
 .glyph-icon {
     -fx-text-fill: -icons-color;
     -fx-fill: -icons-color;
@@ -25,11 +19,11 @@
     -fx-fill: -icons-color;
 }
 
-.config {
+.config-icon {
     -fx-text-fill: -icons-color-hover;
     -fx-fill: -icons-color-hover;
 }
 
-.config:hover {
+.config-icon:hover {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1.0), 10, 0, 0, 0);
 }

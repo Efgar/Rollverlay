@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 
 public class Header extends HBox {
     public Header(Stage primaryStage) {
-        getStylesheets().add(getClass().getResource("/css/header.css").toExternalForm());
         getStyleClass().add("hbox");
 
         final Pane spacer = new Pane();
@@ -22,7 +21,7 @@ public class Header extends HBox {
 
         FontAwesomeIconView configIcon = createBarIconButton(FontAwesomeIcon.COG);
         configIcon.setFill(Color.WHITE);
-        configIcon.getStyleClass().add("config");
+        configIcon.getStyleClass().add("config-icon");
         configIcon.setOnMouseClicked(e -> System.out.println("configure stuff"));
 
         Label title = new Label("Rollverlay");
