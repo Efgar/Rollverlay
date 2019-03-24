@@ -1,4 +1,4 @@
 package com.efgh.avraelayout.ui.tabs;
 
-public class CustomRolls {
+public interface Rollable {
 }

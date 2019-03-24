@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui.components;
+package com.efgh.avraelayout.ui.sections.components;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.TextFormatter;

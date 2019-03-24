@@ -1,8 +1,11 @@
 import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
 import com.efgh.avraelayout.ui.sections.RollingGui;
+import com.efgh.avraelayout.ui.tabs.Attacks;
 import com.efgh.avraelayout.ui.tabs.Attributes;
-import com.efgh.avraelayout.ui.tabs.DiceRoller;
+import com.efgh.avraelayout.ui.tabs.DiceRoller.DiceRoller;
+import com.efgh.avraelayout.ui.tabs.Skills;
+import com.efgh.avraelayout.ui.tabs.Spells;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,7 +32,7 @@ public class Rollverlay extends Application {
         border.setTop(new Header(primaryStage));
         border.setCenter(getContentPane());
 
-        Scene scene = new Scene(border ,400, 250);
+        Scene scene = new Scene(border, 500, 250);
         scene.getStylesheets().addAll(selectedTheme.getCssList());
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -57,6 +60,9 @@ public class Rollverlay extends Application {
         JFXTabPane tabPane = new JFXTabPane();
         tabPane.getTabs().add(new DiceRoller());
         tabPane.getTabs().add(new Attributes());
+        tabPane.getTabs().add(new Skills());
+        tabPane.getTabs().add(new Attacks());
+        tabPane.getTabs().add(new Spells());
         tabPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         return tabPane;
     }

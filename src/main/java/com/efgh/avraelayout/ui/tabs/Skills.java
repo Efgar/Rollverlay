@@ -1,4 +1,10 @@
 package com.efgh.avraelayout.ui.tabs;
 
-public class Skills {
+import javafx.scene.control.Tab;
+
+public class Skills extends Tab {
+
+    public Skills() {
+        setText("Skills");
+    }
 }
