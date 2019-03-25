@@ -12,6 +12,6 @@
 
 .support-actions{
     -fx-background-color: WHITE;
-    -fx-text-fill:RED;
+    -fx-text-fill:DARKRED;
     -fx-font-weight:bold;
 }

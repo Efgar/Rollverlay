@@ -1,4 +1,4 @@
-.hbox, .vbox, .rolling-bar {
+.hbox, .vbox, .rolling-bar, .flowPane {
     -fx-background-color: DARKRED;
     -fx-padding: 5;
     -fx-spacing: 3;
@@ -9,4 +9,9 @@
     -fx-border-style: solid;
     -fx-border-width: 3 0 0 0;
     -fx-spacing: 7;
+}
+
+.flowPane {
+    -fx-hgap: 5;
+    -fx-vgap: 5;
 }

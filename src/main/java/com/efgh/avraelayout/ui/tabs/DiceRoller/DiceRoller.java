@@ -4,17 +4,15 @@ import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiceRoller extends Tab {
-    private HBox savedRollsButtons = new HBox();
+    private FlowPane savedRollsButtons = new FlowPane();
     private List<SavedRoll> savedRolls = new ArrayList<>();
 
     private List<DieSection> dice = new ArrayList<>();
@@ -37,7 +35,7 @@ public class DiceRoller extends Tab {
         setContent(tabContent);
     }
 
-    private void fillDiceButtons() {
+    private void createDiceButtons() {
         dice.add(d2);
         dice.add(d4);
         dice.add(d6);
@@ -48,8 +46,7 @@ public class DiceRoller extends Tab {
     }
 
     private HBox getDiceButtonsPane(){
-        fillDiceButtons();
-
+        createDiceButtons();
         HBox diceButtons = new HBox();
         diceButtons.getStyleClass().add("hbox");
         diceButtons.getChildren().addAll(dice);
@@ -58,6 +55,12 @@ public class DiceRoller extends Tab {
     }
 
     private HBox getDiceOptionsPane(){
+        for (int i = 0; i < 10; i++) {
+            savedRolls.add(new SavedRoll("Test,,4,6,8,10,12,20"));
+        }
+        savedRolls.add(new SavedRoll("Longer Test,,4,6,8,10,12,20"));
+        populateSavedRolls();
+
         JFXButton resetDiceButton = new JFXButton("Reset dice");
         resetDiceButton.getStyleClass().add("secondary-action");
         resetDiceButton.setOnMouseClicked(e -> resetDice());
@@ -70,7 +73,7 @@ public class DiceRoller extends Tab {
         optionButtons.getStyleClass().add("vbox");
         optionButtons.getChildren().addAll(resetDiceButton, saveRollButton);
 
-        savedRollsButtons.getStyleClass().add("hbox");
+        savedRollsButtons.getStyleClass().add("flowPane");
 
         HBox diceOptions = new HBox();
         diceOptions.getStyleClass().add("hbox");
@@ -82,6 +85,7 @@ public class DiceRoller extends Tab {
 
         return diceOptions;
     }
+
     private void populateSavedRolls(){
         savedRolls.forEach(savedRoll -> {
             JFXButton savedRollBtn = new JFXButton(savedRoll.rollName);
@@ -92,7 +96,13 @@ public class DiceRoller extends Tab {
     }
 
     private void fillDiceFromSaved(SavedRoll savedRoll){
-
+        d2.setDiceAmount(NumberUtils.toInt(savedRoll.d2));
+        d4.setDiceAmount(NumberUtils.toInt(savedRoll.d4));
+        d6.setDiceAmount(NumberUtils.toInt(savedRoll.d6));
+        d8.setDiceAmount(NumberUtils.toInt(savedRoll.d8));
+        d10.setDiceAmount(NumberUtils.toInt(savedRoll.d10));
+        d12.setDiceAmount(NumberUtils.toInt(savedRoll.d12));
+        d20.setDiceAmount(NumberUtils.toInt(savedRoll.d20));
     }
 
     private void resetDice() {

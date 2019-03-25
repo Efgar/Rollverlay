@@ -51,12 +51,17 @@ class DieSection extends VBox {
         textField.setText(String.valueOf(ObjectUtils.defaultIfNull(dieCount, "")));
     }
 
+    void setDiceAmount(Integer amount) {
+        dieCount = amount <= 0 ? null : amount;
+        textField.setText(String.valueOf(ObjectUtils.defaultIfNull(dieCount, "")));
+    }
+
     void reset() {
         dieCount = null;
         textField.setText("");
     }
 
-    public String getDiceToRoll() {
+    String getDiceToRoll() {
         if (dieCount != null && dieCount >= 0) {
             return dieCount + "d" + dieValue;
         }
