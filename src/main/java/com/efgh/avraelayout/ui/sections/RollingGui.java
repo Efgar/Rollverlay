@@ -2,6 +2,7 @@ package com.efgh.avraelayout.ui.sections;
 
 import com.efgh.avraelayout.ui.sections.components.ManualModifierTextField;
 import com.efgh.avraelayout.ui.sections.components.ManualModifierToogleButton;
+import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.scene.layout.HBox;
@@ -33,7 +34,7 @@ public class RollingGui extends HBox {
 
         JFXButton rollButton = new JFXButton("Copy");
         rollButton.getStyleClass().add("main-action");
-        rollButton.setOnMouseClicked(e -> System.out.println("Rolling"));
+        rollButton.setOnMouseClicked(e -> ClipboardHelper.copyTextToClipBoard(""));
 
         getChildren().addAll(toggleModifiers);
         getChildren().addAll(manualModifiers);
