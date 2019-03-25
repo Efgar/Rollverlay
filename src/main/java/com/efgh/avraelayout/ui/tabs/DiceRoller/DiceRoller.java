@@ -3,6 +3,7 @@ package com.efgh.avraelayout.ui.tabs.DiceRoller;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -16,11 +17,19 @@ public class DiceRoller extends Tab {
     public DiceRoller() {
         setText("Dice Roller");
         fillDiceButtons();
+
+
+        HBox diceButtons = new HBox();
+        diceButtons.getStyleClass().add("hbox");
+        diceButtons.getChildren().addAll(dice);
+
         HBox diceOptions = new HBox();
         diceOptions.getStyleClass().add("hbox");
-        diceOptions.getChildren().addAll(dice);
 
-        setContent(diceOptions);
+        VBox tabContent = new VBox();
+        tabContent.getChildren().addAll(diceButtons, diceOptions);
+
+        setContent(tabContent);
     }
 
     private void fillDiceButtons() {
