@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiceRoller extends Tab {
+    private HBox savedRollsButtons = new HBox();
+    private List<SavedRoll> savedRolls = new ArrayList<>();
 
     private List<DieSection> dice = new ArrayList<>();
     private String diceToRoll = "";
@@ -65,10 +67,10 @@ public class DiceRoller extends Tab {
         saveRollButton.setOnMouseClicked(e -> ClipboardHelper.copyTextToClipBoard(""));
 
         VBox optionButtons = new VBox();
+        optionButtons.getStyleClass().add("vbox");
         optionButtons.getChildren().addAll(resetDiceButton, saveRollButton);
 
-        HBox savedRolls = new HBox();
-        savedRolls.getStyleClass().add("hbox");
+        savedRollsButtons.getStyleClass().add("hbox");
 
         HBox diceOptions = new HBox();
         diceOptions.getStyleClass().add("hbox");
@@ -76,9 +78,21 @@ public class DiceRoller extends Tab {
         final Pane spacer = new Pane();
         spacer.setMinSize(5, 1);
         diceOptions.setHgrow(spacer, Priority.ALWAYS);
-        diceOptions.getChildren().addAll(savedRolls, spacer, optionButtons);
+        diceOptions.getChildren().addAll(savedRollsButtons, spacer, optionButtons);
 
         return diceOptions;
+    }
+    private void populateSavedRolls(){
+        savedRolls.forEach(savedRoll -> {
+            JFXButton savedRollBtn = new JFXButton(savedRoll.rollName);
+            savedRollBtn.getStyleClass().add("support-actions");
+            savedRollBtn.setOnMouseClicked(e -> fillDiceFromSaved(savedRoll));
+            savedRollsButtons.getChildren().add(savedRollBtn);
+        });
+    }
+
+    private void fillDiceFromSaved(SavedRoll savedRoll){
+
     }
 
     private void resetDice() {

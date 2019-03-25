@@ -1,4 +1,4 @@
-.hbox, .rolling-bar {
+.hbox, .vbox, .rolling-bar {
     -fx-background-color: DARKRED;
     -fx-padding: 5;
     -fx-spacing: 3;

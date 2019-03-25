@@ -9,3 +9,9 @@
     -fx-text-fill:WHITE;
     -fx-font-weight:bold;
 }
+
+.support-actions{
+    -fx-background-color: WHITE;
+    -fx-text-fill:RED;
+    -fx-font-weight:bold;
+}
