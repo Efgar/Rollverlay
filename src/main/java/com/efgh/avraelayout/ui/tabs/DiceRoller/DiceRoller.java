@@ -1,9 +1,14 @@
 package com.efgh.avraelayout.ui.tabs.DiceRoller;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -48,38 +53,45 @@ public class DiceRoller extends Tab {
         createDiceButtons();
         HBox diceButtons = new HBox();
         diceButtons.getStyleClass().add("hbox");
-        diceButtons.getChildren().addAll(dice);
 
-        return diceButtons;
-    }
-
-    private HBox getDiceOptionsPane(){
-        for (int i = 0; i < 10; i++) {
-            savedRolls.add(new SavedRoll("Test,,4,6,8,10,12,20"));
-        }
-        populateSavedRolls();
-
-        JFXButton resetDiceButton = new JFXButton("Reset dice");
+        JFXButton resetDiceButton = new JFXButton("Reset");
         resetDiceButton.getStyleClass().add("secondary-action");
         resetDiceButton.setOnMouseClicked(e -> resetDice());
+        resetDiceButton.setMaxWidth(Double.MAX_VALUE);
 
-        JFXButton saveRollButton = new JFXButton("Save roll");
+        JFXButton saveRollButton = new JFXButton("Save");
         saveRollButton.getStyleClass().add("secondary-action");
         saveRollButton.setOnMouseClicked(e -> saveDiceRoll());
+        saveRollButton.setMaxWidth(Double.MAX_VALUE);
 
         VBox optionButtons = new VBox();
         optionButtons.getStyleClass().add("vbox");
         optionButtons.getChildren().addAll(resetDiceButton, saveRollButton);
 
+        diceButtons.getChildren().addAll(dice);
+        diceButtons.getChildren().add(optionButtons);
+
+        return diceButtons;
+    }
+
+    private HBox getDiceOptionsPane(){
+        populateSavedRolls();
+
         savedRollsButtons.getStyleClass().add("flowPane");
 
-        HBox diceOptions = new HBox();
-        diceOptions.getStyleClass().add("hbox");
+        final ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setBackground(
+                new Background(new BackgroundFill(Color.TRANSPARENT, null, null))
+        );
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setContent(savedRollsButtons);
+        scrollPane.getStyleClass().add("hbox");
 
-        final Pane spacer = new Pane();
-        spacer.setMinSize(5, 1);
-        diceOptions.setHgrow(spacer, Priority.ALWAYS);
-        diceOptions.getChildren().addAll(savedRollsButtons, spacer, optionButtons);
+        HBox diceOptions = new HBox();
+        diceOptions.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        diceOptions.getStyleClass().add("hbox");
+        diceOptions.getChildren().addAll(scrollPane);
 
         return diceOptions;
     }

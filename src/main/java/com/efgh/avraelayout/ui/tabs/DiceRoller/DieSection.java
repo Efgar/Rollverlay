@@ -23,8 +23,8 @@ class DieSection extends VBox {
 
     private JFXButton createDieButton(Image image) {
         ImageView imageAux = new ImageView(image);
-        imageAux.setFitWidth(52);
-        imageAux.setFitHeight(52);
+        imageAux.setFitWidth(42);
+        imageAux.setFitHeight(42);
 
         JFXButton dieButton = new JFXButton();
         dieButton.setGraphic(imageAux);

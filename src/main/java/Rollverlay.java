@@ -5,10 +5,14 @@ import com.efgh.avraelayout.ui.tabs.*;
 import com.efgh.avraelayout.ui.tabs.DiceRoller.DiceRoller;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import static javafx.stage.Screen.getPrimary;
 
 public class Rollverlay extends Application {
 
@@ -16,6 +20,9 @@ public class Rollverlay extends Application {
 
     private double xOffset = 0;
     private double yOffset = 0;
+
+    private int SCREEN_WIDTH = 500;
+    private int SCREEN_HEIGHT = 250;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,8 +36,11 @@ public class Rollverlay extends Application {
         border.setTop(new Header(primaryStage));
         border.setCenter(getContentPane());
 
-        Scene scene = new Scene(border, 500, 250);
+        Scene scene = new Scene(border, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().addAll(selectedTheme.getCssList());
+
+        primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
+        primaryStage.setY(getPrimary().getVisualBounds().getMinY() + getPrimary().getVisualBounds().getHeight() - SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

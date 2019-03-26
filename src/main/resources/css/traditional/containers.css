@@ -14,4 +14,19 @@
 .flowPane {
     -fx-hgap: 5;
     -fx-vgap: 5;
+    -fx-padding: 3 15 3 3;
+}
+
+.scroll-bar{
+    -fx-background-color: TRANSPARENT;
+    -fx-border-color: TRANSPARENT;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color: TRANSPARENT;
+}
+
+.scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
+    -fx-background-color: WHITE;
+    -fx-background-radius: 5em;
 }
