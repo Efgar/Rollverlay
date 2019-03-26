@@ -10,9 +10,9 @@ import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.ObjectUtils;
 
 class DieSection extends VBox {
-    Integer dieCount = null;
-    Integer dieValue;
-    ManualModifierTextField textField = new ManualModifierTextField("Dice amount", "");
+    private Integer dieCount = null;
+    private Integer dieValue;
+    private ManualModifierTextField textField = new ManualModifierTextField("Dice amount", "");
 
     DieSection(Image image, Integer dieValue) {
         this.dieValue = dieValue;
@@ -61,10 +61,14 @@ class DieSection extends VBox {
         textField.setText("");
     }
 
-    String getDiceToRoll() {
+    String getDiceToRollExpression() {
         if (dieCount != null && dieCount >= 0) {
             return dieCount + "d" + dieValue;
         }
         return null;
+    }
+
+    String getDiceCount() {
+        return String.valueOf(ObjectUtils.defaultIfNull(dieCount, ""));
     }
 }

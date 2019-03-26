@@ -1,6 +1,5 @@
 package com.efgh.avraelayout.ui.tabs.DiceRoller;
 
-import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
@@ -58,7 +57,6 @@ public class DiceRoller extends Tab {
         for (int i = 0; i < 10; i++) {
             savedRolls.add(new SavedRoll("Test,,4,6,8,10,12,20"));
         }
-        savedRolls.add(new SavedRoll("Longer Test,,4,6,8,10,12,20"));
         populateSavedRolls();
 
         JFXButton resetDiceButton = new JFXButton("Reset dice");
@@ -67,7 +65,7 @@ public class DiceRoller extends Tab {
 
         JFXButton saveRollButton = new JFXButton("Save roll");
         saveRollButton.getStyleClass().add("secondary-action");
-        saveRollButton.setOnMouseClicked(e -> ClipboardHelper.copyTextToClipBoard(""));
+        saveRollButton.setOnMouseClicked(e -> saveDiceRoll());
 
         VBox optionButtons = new VBox();
         optionButtons.getStyleClass().add("vbox");
@@ -86,7 +84,21 @@ public class DiceRoller extends Tab {
         return diceOptions;
     }
 
+    private void saveDiceRoll() {
+        String rollName = "savedRoll";
+        savedRolls.add(new SavedRoll(rollName,
+                d2.getDiceCount(),
+                d4.getDiceCount(),
+                d6.getDiceCount(),
+                d8.getDiceCount(),
+                d10.getDiceCount(),
+                d12.getDiceCount(),
+                d20.getDiceCount()));
+        populateSavedRolls();
+    }
+
     private void populateSavedRolls(){
+        savedRollsButtons.getChildren().clear();
         savedRolls.forEach(savedRoll -> {
             JFXButton savedRollBtn = new JFXButton(savedRoll.rollName);
             savedRollBtn.getStyleClass().add("support-actions");
@@ -111,7 +123,7 @@ public class DiceRoller extends Tab {
 
     public String getDiceToRoll() {
         dice.forEach(e -> {
-            String diceAux = e.getDiceToRoll();
+            String diceAux = e.getDiceToRollExpression();
             if (!StringUtils.isEmpty(diceAux)) {
                 diceToRoll = String.join(" + ", diceToRoll, diceAux);
             }

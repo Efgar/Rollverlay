@@ -23,6 +23,7 @@ public class SavedRoll {
     }
 
     public SavedRoll(String rollName, String d2, String d4, String d6, String d8, String d10, String d12, String d20){
+        this.rollName = rollName;
         this.d2 = d2;
         this.d4 = d4;
         this.d6 = d6;
