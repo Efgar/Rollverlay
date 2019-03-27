@@ -40,8 +40,8 @@ class SaveDiceRoll {
                 .build());
 
         rollName.getValidators().add(validator);
-
-        rollName.focusedProperty().addListener((o, oldVal, newVal) -> {
+        rollName.validate();
+        rollName.textProperty().addListener((o, oldVal, newVal) -> {
             if(rollName.validate()){
                 okay.setDisable(false);
             }else{
@@ -76,7 +76,7 @@ class SaveDiceRoll {
 
     void setOnAcceptAction(EventHandler<ActionEvent> action) {
         okay.setOnAction(action);
-        okay.setOnMouseClicked(event -> {
+        okay.setOnMousePressed(event -> {
             rollToSave.setRollName(rollName.getText());
             this.diceRolls.add(rollToSave);
             jfxDialog.close();
