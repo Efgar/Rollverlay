@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui.tabs.DiceRoller;
+package com.efgh.avraelayout.ui.tabs.diceroller;
 
 import com.efgh.avraelayout.ui.components.ManualModifierTextField;
 import com.jfoenix.controls.JFXButton;

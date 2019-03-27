@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui.tabs.DiceRoller;
+package com.efgh.avraelayout.ui.tabs.diceroller;
 
 import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.entities.DiceRoll;
