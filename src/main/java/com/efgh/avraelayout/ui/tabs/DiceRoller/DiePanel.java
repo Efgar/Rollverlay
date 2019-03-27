@@ -9,12 +9,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.ObjectUtils;
 
-class DieSection extends VBox {
+class DiePanel extends VBox {
     private Integer dieCount = null;
     private Integer dieValue;
     private ManualModifierTextField textField = new ManualModifierTextField("Dice amount", "");
 
-    DieSection(Image image, Integer dieValue) {
+    DiePanel(Image image, Integer dieValue) {
         this.dieValue = dieValue;
         setAlignment(Pos.TOP_CENTER);
         getChildren().add(createDieButton(image));

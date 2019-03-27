@@ -4,7 +4,7 @@ import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
 import com.efgh.avraelayout.ui.sections.RollingGui;
 import com.efgh.avraelayout.ui.tabs.*;
-import com.efgh.avraelayout.ui.tabs.DiceRoller.DiceRoller;
+import com.efgh.avraelayout.ui.tabs.DiceRoller.DiceRollerTab;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -66,7 +66,7 @@ public class Rollverlay extends Application {
 
     private JFXTabPane getApplicationTabPane(){
         JFXTabPane tabPane = new JFXTabPane();
-        tabPane.getTabs().add(new DiceRoller());
+        tabPane.getTabs().add(new DiceRollerTab());
         tabPane.getTabs().add(new Attributes());
         tabPane.getTabs().add(new Skills());
         tabPane.getTabs().add(new Attacks());

@@ -17,22 +17,22 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiceRoller extends Tab {
+public class DiceRollerTab extends Tab {
     private FlowPane savedRollsButtons = new FlowPane();
     private List<DiceRoll> diceRolls = new ArrayList<>();
 
-    private List<DieSection> dice = new ArrayList<>();
+    private List<DiePanel> dice = new ArrayList<>();
     private String diceToRoll = "";
 
-    private DieSection d2 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d2.png")), 2);
-    private DieSection d4 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d4.png")), 4);
-    private DieSection d6 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d6.png")), 6);
-    private DieSection d8 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d8.png")), 8);
-    private DieSection d10 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d10.png")), 10);
-    private DieSection d12 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d12.png")), 12);
-    private DieSection d20 = new DieSection(new Image(getClass().getResourceAsStream("/img/die/d20.png")), 20);
+    private DiePanel d2 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d2.png")), 2);
+    private DiePanel d4 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d4.png")), 4);
+    private DiePanel d6 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d6.png")), 6);
+    private DiePanel d8 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d8.png")), 8);
+    private DiePanel d10 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d10.png")), 10);
+    private DiePanel d12 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d12.png")), 12);
+    private DiePanel d20 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d20.png")), 20);
 
-    public DiceRoller() {
+    public DiceRollerTab() {
         setText("Dice Roller");
         VBox tabContent = new VBox();
         tabContent.setPrefHeight(Double.MAX_VALUE);
@@ -95,7 +95,7 @@ public class DiceRoller extends Tab {
     }
 
     private void saveDiceRoll() {
-        SaveDiceRoll savePopup = new SaveDiceRoll(diceRolls, getRollToSave());
+        RollSavePopup savePopup = new RollSavePopup(diceRolls, getRollToSave());
         savePopup.setOnAcceptAction(e -> populateSavedRolls());
         savePopup.show();
     }
@@ -147,7 +147,7 @@ public class DiceRoller extends Tab {
     }
 
     private void resetDice() {
-        dice.forEach(DieSection::reset);
+        dice.forEach(DiePanel::reset);
     }
 
     public String getDiceToRoll() {

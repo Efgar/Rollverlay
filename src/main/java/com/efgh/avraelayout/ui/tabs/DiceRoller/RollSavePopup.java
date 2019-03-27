@@ -18,14 +18,14 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-class SaveDiceRoll {
+class RollSavePopup {
     private JFXDialog jfxDialog;
     private JFXTextField rollName = new JFXTextField();
     private JFXButton okay;
     private DiceRoll rollToSave;
     private List<DiceRoll> diceRolls;
 
-    SaveDiceRoll(List<DiceRoll> diceRolls, DiceRoll rollToSave) {
+    RollSavePopup(List<DiceRoll> diceRolls, DiceRoll rollToSave) {
         List<JFXButton> actionBtns = new ArrayList<>();
         this.rollToSave = rollToSave;
         this.diceRolls = diceRolls;
