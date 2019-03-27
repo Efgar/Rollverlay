@@ -1,6 +1,6 @@
 package com.efgh.avraelayout.ui.tabs.DiceRoller;
 
-import com.efgh.avraelayout.ui.sections.components.ManualModifierTextField;
+import com.efgh.avraelayout.ui.components.ManualModifierTextField;
 import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

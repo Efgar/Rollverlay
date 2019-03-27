@@ -1,3 +1,5 @@
+package com.efgh.avraelayout;
+
 import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
 import com.efgh.avraelayout.ui.sections.RollingGui;
@@ -5,10 +7,8 @@ import com.efgh.avraelayout.ui.tabs.*;
 import com.efgh.avraelayout.ui.tabs.DiceRoller.DiceRoller;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -16,6 +16,7 @@ import static javafx.stage.Screen.getPrimary;
 
 public class Rollverlay extends Application {
 
+    public static StackPane DIALOG_PANE = new StackPane();
     private Themes selectedTheme = Themes.TRADITIONAL;
 
     private double xOffset = 0;
@@ -32,9 +33,9 @@ public class Rollverlay extends Application {
     public void start(Stage primaryStage) {
         BorderPane border = new BorderPane();
         setParentWindowProperties(border, primaryStage);
-
+        DIALOG_PANE.getChildren().add(getContentPane());
         border.setTop(new Header(primaryStage));
-        border.setCenter(getContentPane());
+        border.setCenter(DIALOG_PANE);
 
         Scene scene = new Scene(border, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().addAll(selectedTheme.getCssList());

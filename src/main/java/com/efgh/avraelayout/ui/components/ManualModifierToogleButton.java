@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui.sections.components;
+package com.efgh.avraelayout.ui.components;
 
 import com.jfoenix.controls.JFXToggleNode;
 import de.jensd.fx.glyphs.GlyphIcon;

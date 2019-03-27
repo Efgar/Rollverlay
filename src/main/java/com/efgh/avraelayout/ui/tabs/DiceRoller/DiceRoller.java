@@ -1,14 +1,16 @@
 package com.efgh.avraelayout.ui.tabs.DiceRoller;
 
+import com.efgh.avraelayout.entities.DiceRoll;
+import com.efgh.avraelayout.ui.components.ConfirmationDialog;
 import com.jfoenix.controls.JFXButton;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Bounds;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -17,7 +19,7 @@ import java.util.List;
 
 public class DiceRoller extends Tab {
     private FlowPane savedRollsButtons = new FlowPane();
-    private List<SavedRoll> savedRolls = new ArrayList<>();
+    private List<DiceRoll> diceRolls = new ArrayList<>();
 
     private List<DieSection> dice = new ArrayList<>();
     private String diceToRoll = "";
@@ -32,11 +34,13 @@ public class DiceRoller extends Tab {
 
     public DiceRoller() {
         setText("Dice Roller");
-
         VBox tabContent = new VBox();
-        tabContent.getChildren().addAll(getDiceButtonsPane(), getDiceOptionsPane());
-
+        tabContent.setPrefHeight(Double.MAX_VALUE);
+        tabContent.getStyleClass().add("test2");
+        addDiceButtonsPane(tabContent);
+        addDiceOptionsPane(tabContent);
         setContent(tabContent);
+        getContent().getStyleClass().add("test2");
     }
 
     private void createDiceButtons() {
@@ -49,7 +53,7 @@ public class DiceRoller extends Tab {
         dice.add(d20);
     }
 
-    private HBox getDiceButtonsPane(){
+    private void addDiceButtonsPane(VBox tabContent) {
         createDiceButtons();
         HBox diceButtons = new HBox();
         diceButtons.getStyleClass().add("hbox");
@@ -71,62 +75,75 @@ public class DiceRoller extends Tab {
         diceButtons.getChildren().addAll(dice);
         diceButtons.getChildren().add(optionButtons);
 
-        return diceButtons;
+        tabContent.getChildren().add(diceButtons);
     }
 
-    private HBox getDiceOptionsPane(){
+    private void addDiceOptionsPane(VBox tabContent) {
         populateSavedRolls();
 
         savedRollsButtons.getStyleClass().add("flowPane");
+        savedRollsButtons.prefWrapLengthProperty().bind(tabContent.widthProperty());
 
         final ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setBackground(
-                new Background(new BackgroundFill(Color.TRANSPARENT, null, null))
-        );
+        scrollPane.getStyleClass().add("hbox");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         scrollPane.setContent(savedRollsButtons);
-        scrollPane.getStyleClass().add("hbox");
 
-        HBox diceOptions = new HBox();
-        diceOptions.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        diceOptions.getStyleClass().add("hbox");
-        diceOptions.getChildren().addAll(scrollPane);
-
-        return diceOptions;
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+        tabContent.getChildren().add(scrollPane);
     }
 
     private void saveDiceRoll() {
-        String rollName = "savedRoll";
-        savedRolls.add(new SavedRoll(rollName,
+        SaveDiceRoll savePopup = new SaveDiceRoll(diceRolls, getRollToSave());
+        savePopup.setOnAcceptAction(e -> populateSavedRolls());
+        savePopup.show();
+    }
+
+    private DiceRoll getRollToSave() {
+        return new DiceRoll(null,
                 d2.getDiceCount(),
                 d4.getDiceCount(),
                 d6.getDiceCount(),
                 d8.getDiceCount(),
                 d10.getDiceCount(),
                 d12.getDiceCount(),
-                d20.getDiceCount()));
-        populateSavedRolls();
+                d20.getDiceCount());
     }
 
-    private void populateSavedRolls(){
+    private void populateSavedRolls() {
         savedRollsButtons.getChildren().clear();
-        savedRolls.forEach(savedRoll -> {
-            JFXButton savedRollBtn = new JFXButton(savedRoll.rollName);
+        diceRolls.forEach(diceRoll -> {
+            JFXButton savedRollBtn = new JFXButton(diceRoll.getRollName());
             savedRollBtn.getStyleClass().add("support-actions");
-            savedRollBtn.setOnMouseClicked(e -> fillDiceFromSaved(savedRoll));
+            savedRollBtn.setOnMouseClicked(e -> {
+                if (e.getButton() == MouseButton.PRIMARY) {
+                    fillDiceFromSaved(diceRoll);
+                } else {
+                    removeDiceFromSaved(diceRoll);
+                }
+            });
             savedRollsButtons.getChildren().add(savedRollBtn);
         });
     }
 
-    private void fillDiceFromSaved(SavedRoll savedRoll){
-        d2.setDiceAmount(NumberUtils.toInt(savedRoll.d2));
-        d4.setDiceAmount(NumberUtils.toInt(savedRoll.d4));
-        d6.setDiceAmount(NumberUtils.toInt(savedRoll.d6));
-        d8.setDiceAmount(NumberUtils.toInt(savedRoll.d8));
-        d10.setDiceAmount(NumberUtils.toInt(savedRoll.d10));
-        d12.setDiceAmount(NumberUtils.toInt(savedRoll.d12));
-        d20.setDiceAmount(NumberUtils.toInt(savedRoll.d20));
+    private void removeDiceFromSaved(DiceRoll diceRoll) {
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog(String.format("Delete saved dice roll (%s)", diceRoll.getRollName()), "Are you sure you want to delete this saved dice combination?", true);
+        confirmationDialog.setOnAcceptAction(e -> {
+            diceRolls.remove(diceRoll);
+            populateSavedRolls();
+        });
+        confirmationDialog.show();
+    }
+
+    private void fillDiceFromSaved(DiceRoll diceRoll) {
+        d2.setDiceAmount(NumberUtils.toInt(diceRoll.getD2()));
+        d4.setDiceAmount(NumberUtils.toInt(diceRoll.getD4()));
+        d6.setDiceAmount(NumberUtils.toInt(diceRoll.getD6()));
+        d8.setDiceAmount(NumberUtils.toInt(diceRoll.getD8()));
+        d10.setDiceAmount(NumberUtils.toInt(diceRoll.getD10()));
+        d12.setDiceAmount(NumberUtils.toInt(diceRoll.getD12()));
+        d20.setDiceAmount(NumberUtils.toInt(diceRoll.getD20()));
     }
 
     private void resetDice() {
