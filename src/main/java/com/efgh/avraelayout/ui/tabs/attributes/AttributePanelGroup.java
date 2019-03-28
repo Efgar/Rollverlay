@@ -10,13 +10,13 @@ public class AttributePanelGroup {
 
     void addAttributeButton(Image image, String attributeName, String attributeExpresion) {
         AttributePanel attribute = new AttributePanel(image, attributeName, attributeExpresion);
-        attribute.setOnMouseClicked(e-> panelGroup.forEach(attr -> attr.setSelected(false)));
+        attribute.setOnClickAction(e -> panelGroup.forEach(attr -> attr.setSelected(false)));
         panelGroup.add(attribute);
     }
 
-    String getRollExpression(){
-        for (AttributePanel attribute: panelGroup){
-            if(attribute.isSelected()){
+    String getRollExpression() {
+        for (AttributePanel attribute : panelGroup) {
+            if (attribute.isSelected()) {
                 return attribute.getRollExpression();
             }
         }

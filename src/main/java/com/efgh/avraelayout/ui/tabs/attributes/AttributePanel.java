@@ -2,6 +2,8 @@ package com.efgh.avraelayout.ui.tabs.attributes;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,7 @@ public class AttributePanel extends VBox {
     private String attributeExpression;
     private boolean isSelected = true;
     private JFXToggleButton toggleButton = new JFXToggleButton();
+    private JFXButton attributeButton = new JFXButton();
 
     AttributePanel(Image image, String attributeName, String attributeExpression) {
         this.attributeExpression = attributeExpression;
@@ -30,10 +33,13 @@ public class AttributePanel extends VBox {
         imageAux.setFitWidth(65);
         imageAux.setFitHeight(65);
 
-        JFXButton attributeButton = new JFXButton();
         attributeButton.setGraphic(imageAux);
         attributeButton.setOnMouseClicked(e -> setSelected(e.getButton() == MouseButton.PRIMARY));
         return attributeButton;
+    }
+
+    void setOnClickAction(EventHandler<ActionEvent> action) {
+        attributeButton.setOnAction(action);
     }
 
     void setSelected(boolean isSelected) {
