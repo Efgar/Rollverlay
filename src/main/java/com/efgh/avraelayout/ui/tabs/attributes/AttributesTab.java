@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
 public class AttributesTab extends Tab implements Rollable {
-    AttributePanelGroup attributes = new AttributePanelGroup();
+    private AttributePanelGroup attributes = new AttributePanelGroup();
     public AttributesTab() {
         setText("Attributes");
 

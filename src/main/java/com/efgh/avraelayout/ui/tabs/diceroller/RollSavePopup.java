@@ -1,6 +1,5 @@
 package com.efgh.avraelayout.ui.tabs.diceroller;
 
-import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.entities.DiceRoll;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -17,6 +16,8 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.efgh.avraelayout.Rollverlay.getDialogPane;
 
 class RollSavePopup {
     private JFXDialog jfxDialog;
@@ -56,7 +57,7 @@ class RollSavePopup {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text("Save dice roll"));
         jfxDialogLayout.setBody(saveBody);
-        jfxDialog = new JFXDialog(Rollverlay.DIALOG_PANE, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        jfxDialog = new JFXDialog(getDialogPane(), jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
         JFXButton cancel = new JFXButton("CANCEL");
         cancel.getStyleClass().add("secondary-action");
@@ -68,7 +69,6 @@ class RollSavePopup {
         okay.getStyleClass().add("secondary-action");
         okay.setButtonType(JFXButton.ButtonType.RAISED);
         okay.setDisable(true);
-        setOnAcceptAction(event -> jfxDialog.close());
         actionBtns.add(okay);
 
         jfxDialogLayout.setActions(actionBtns);

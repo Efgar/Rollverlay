@@ -15,3 +15,15 @@
     -fx-text-fill:DARKRED;
     -fx-font-weight:bold;
 }
+
+.jfx-toggle-button {
+    -fx-font-weight: BOLD;
+    -fx-fill: WHITE;
+    -fx-text-fill: WHITE;
+    -jfx-toggle-color: WHITE;
+    -jfx-untoggle-color: BLACK;
+    -jfx-toggle-line-color: #77C2BB;
+    -jfx-untoggle-line-color: #999999;
+    -jfx-size: 5.0;
+    -jfx-disable-visual-focus: false;
+}

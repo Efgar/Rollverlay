@@ -3,24 +3,18 @@ package com.efgh.avraelayout.ui.components;
 import com.jfoenix.controls.JFXTextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.Tooltip;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
-public class ManualModifierTextField extends JFXTextField {
-    Integer defaultValue;
-    Pattern validInteger = Pattern.compile("(-|\\+)?(\\d{0,2})");
+public abstract class ShortTextField extends JFXTextField {
+    private Integer defaultValue;
 
-    public ManualModifierTextField(String modifierName) {
-        this(modifierName, StringUtils.left(modifierName, 3), null);
-    }
-
-    public ManualModifierTextField(String modifierName, String modifierPlaceHolder) {
+    public ShortTextField(String modifierName, String modifierPlaceHolder) {
         this(modifierName, modifierPlaceHolder, null);
     }
 
-    public ManualModifierTextField(String modifierName, String modifierPlaceHolder, Integer defaultValue) {
+    private ShortTextField(String modifierName, String modifierPlaceHolder, Integer defaultValue) {
         setTextFormatter();
         getStyleClass().add("manual-modifiers");
         setPromptText(modifierPlaceHolder);
@@ -45,11 +39,12 @@ public class ManualModifierTextField extends JFXTextField {
     private UnaryOperator<TextFormatter.Change> getFilter() {
         return change -> {
             String text = change.getControlNewText();
-            if (validInteger.matcher(text).matches()) {
+            if (getValidationPattern().matcher(text).matches()) {
                 return change;
             }
             return null;
         };
     }
 
+    public abstract Pattern getValidationPattern();
 }

@@ -1,16 +1,20 @@
 package com.efgh.avraelayout.ui.tabs.attributes;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AttributePanelGroup {
+class AttributePanelGroup {
     private List<AttributePanel> panelGroup = new ArrayList<>();
 
-    void addAttributeButton(Image image, String attributeName, String attributeExpresion) {
-        AttributePanel attribute = new AttributePanel(image, attributeName, attributeExpresion);
-        attribute.setOnClickAction(e -> panelGroup.forEach(attr -> attr.setSelected(false)));
+    void addAttributeButton(Image image, String attributeName, String attributeExpression) {
+        AttributePanel attribute = new AttributePanel(image, attributeName, attributeExpression);
+        attribute.setOnClickAction(e -> {
+            panelGroup.forEach(attr -> attr.setSelected(false));
+            attribute.setSelected(e.getButton() == MouseButton.PRIMARY);
+        });
         panelGroup.add(attribute);
     }
 
@@ -20,7 +24,7 @@ public class AttributePanelGroup {
                 return attribute.getRollExpression();
             }
         }
-        throw new IllegalStateException("No attribute selected");
+        return "";
     }
 
     List<AttributePanel> getAttributePanels() {

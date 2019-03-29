@@ -4,7 +4,7 @@
 
 .hbox, .vbox {
     -fx-background-color: DARKRED;
-    -fx-padding: 5;
+    -fx-padding: 4;
     -fx-spacing: 3;
 }
 
@@ -40,4 +40,22 @@
 .scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
     -fx-background-color: WHITE;
     -fx-background-radius: 5em;
+}
+
+.clickable-pane {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.clickable-pane-selected {
+    -fx-background-color: RED;
+}
+
+.clickable-pane:hover {
+    -fx-background-color: RED;
+}
+
+.image-container {
+    -fx-padding: 5;
 }

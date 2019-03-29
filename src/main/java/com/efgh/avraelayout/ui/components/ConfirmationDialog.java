@@ -1,6 +1,5 @@
 package com.efgh.avraelayout.ui.components;
 
-import com.efgh.avraelayout.Rollverlay;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -11,9 +10,11 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.efgh.avraelayout.Rollverlay.getDialogPane;
+
 public class ConfirmationDialog {
-    JFXDialog jfxDialog;
-    JFXButton okay;
+    private JFXDialog jfxDialog;
+    private JFXButton okay;
 
     public ConfirmationDialog(String dialogTitle, String dialogText, boolean hasCancelOption){
         List<JFXButton> actionBtns = new ArrayList<>();
@@ -21,7 +22,7 @@ public class ConfirmationDialog {
         JFXDialogLayout jfxDialogLayout = new JFXDialogLayout();
         jfxDialogLayout.setHeading(new Text(dialogTitle));
         jfxDialogLayout.setBody(new Text(dialogText));
-        jfxDialog = new JFXDialog(Rollverlay.DIALOG_PANE, jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
+        jfxDialog = new JFXDialog(getDialogPane(), jfxDialogLayout, JFXDialog.DialogTransition.CENTER);
 
         if(hasCancelOption){
             JFXButton cancel = new JFXButton("CANCEL");

@@ -1,7 +1,7 @@
 package com.efgh.avraelayout.ui.tabs.diceroller;
 
-import com.efgh.avraelayout.ui.components.ManualModifierTextField;
 import com.jfoenix.controls.JFXButton;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,13 +12,15 @@ import org.apache.commons.lang3.ObjectUtils;
 class DiePanel extends VBox {
     private Integer dieCount = null;
     private Integer dieValue;
-    private ManualModifierTextField textField = new ManualModifierTextField("Dice amount", "");
+    private DiceNumberTextField textField = new DiceNumberTextField("Dice amount", "");
 
     DiePanel(Image image, Integer dieValue) {
+        getStyleClass().add("clickable-pane");
         this.dieValue = dieValue;
         setAlignment(Pos.TOP_CENTER);
         getChildren().add(createDieButton(image));
         getChildren().add(textField);
+        setMargin(textField, new Insets(0, 0, 5, 0));
     }
 
     private JFXButton createDieButton(Image image) {

@@ -2,6 +2,7 @@ package com.efgh.avraelayout.ui.tabs.diceroller;
 
 import com.efgh.avraelayout.entities.DiceRoll;
 import com.efgh.avraelayout.ui.components.ConfirmationDialog;
+import com.efgh.avraelayout.ui.tabs.Rollable;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -16,8 +17,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class DiceRollerTab extends Tab {
+public class DiceRollerTab extends Tab implements Rollable {
     private FlowPane savedRollsButtons = new FlowPane();
     private List<DiceRoll> diceRolls = new ArrayList<>();
 
@@ -94,9 +96,35 @@ public class DiceRollerTab extends Tab {
         tabContent.getChildren().add(scrollPane);
     }
 
+    private void populateSavedRolls() {
+        savedRollsButtons.getChildren().clear();
+        diceRolls.forEach(diceRoll -> {
+            JFXButton savedRollBtn = createSavedRollBtn(diceRoll);
+            savedRollsButtons.getChildren().add(savedRollBtn);
+        });
+    }
+
+    private JFXButton createSavedRollBtn(DiceRoll diceRoll) {
+        JFXButton savedRollBtn = new JFXButton(diceRoll.getRollName());
+        savedRollBtn.getStyleClass().add("support-actions");
+        savedRollBtn.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.PRIMARY) {
+                fillDiceFromSaved(diceRoll);
+            } else {
+                removeDiceFromSaved(diceRoll, savedRollBtn);
+            }
+        });
+        return savedRollBtn;
+    }
+
     private void saveDiceRoll() {
-        RollSavePopup savePopup = new RollSavePopup(diceRolls, getRollToSave());
-        savePopup.setOnAcceptAction(e -> populateSavedRolls());
+        DiceRoll rollToSave = getRollToSave();
+        RollSavePopup savePopup = new RollSavePopup(diceRolls, rollToSave);
+        savePopup.setOnAcceptAction(e -> {
+                    JFXButton savedRollBtn = createSavedRollBtn(rollToSave);
+                    savedRollsButtons.getChildren().add(savedRollBtn);
+                }
+        );
         savePopup.show();
     }
 
@@ -111,27 +139,11 @@ public class DiceRollerTab extends Tab {
                 d20.getDiceCount());
     }
 
-    private void populateSavedRolls() {
-        savedRollsButtons.getChildren().clear();
-        diceRolls.forEach(diceRoll -> {
-            JFXButton savedRollBtn = new JFXButton(diceRoll.getRollName());
-            savedRollBtn.getStyleClass().add("support-actions");
-            savedRollBtn.setOnMouseClicked(e -> {
-                if (e.getButton() == MouseButton.PRIMARY) {
-                    fillDiceFromSaved(diceRoll);
-                } else {
-                    removeDiceFromSaved(diceRoll);
-                }
-            });
-            savedRollsButtons.getChildren().add(savedRollBtn);
-        });
-    }
-
-    private void removeDiceFromSaved(DiceRoll diceRoll) {
+    private void removeDiceFromSaved(DiceRoll diceRoll, JFXButton savedRollBtn) {
         ConfirmationDialog confirmationDialog = new ConfirmationDialog(String.format("Delete saved dice roll (%s)", diceRoll.getRollName()), "Are you sure you want to delete this saved dice combination?", true);
         confirmationDialog.setOnAcceptAction(e -> {
             diceRolls.remove(diceRoll);
-            populateSavedRolls();
+            savedRollsButtons.getChildren().remove(savedRollBtn);
         });
         confirmationDialog.show();
     }
@@ -150,13 +162,12 @@ public class DiceRollerTab extends Tab {
         dice.forEach(DiePanel::reset);
     }
 
-    public String getDiceToRoll() {
-        dice.forEach(e -> {
-            String diceAux = e.getDiceToRollExpression();
-            if (!StringUtils.isEmpty(diceAux)) {
-                diceToRoll = String.join(" + ", diceToRoll, diceAux);
-            }
-        });
-        return diceToRoll;
+    @Override
+    public String getRollExpression() {
+        String rollExpression = dice.stream().map(DiePanel::getDiceToRollExpression).filter(StringUtils::isNotEmpty).collect(Collectors.joining("+"));
+        if (StringUtils.isNotEmpty(rollExpression)) {
+            return "!roll " + rollExpression;
+        }
+        return "";
     }
 }
