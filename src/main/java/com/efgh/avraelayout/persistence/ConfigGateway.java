@@ -23,7 +23,7 @@ public class ConfigGateway {
         appProperties.load(new FileInputStream(appConfigPath));
 
         //Initialize saved rolls
-        String[] savedRollsCfg = StringUtils.defaultIfEmpty(appProperties.getProperty(SAVED_ROLLS_PROPERTY), "").split(SEPARATOR);
+        String[] savedRollsCfg = StringUtils.defaultIfEmpty(appProperties.getProperty(SAVED_ROLLS_PROPERTY), "").split(SEPARATOR, -1);
         for (String savedRoll : savedRollsCfg) {
             if (StringUtils.isNotEmpty(savedRoll)) {
                 savedRolls.add(new DiceRoll(savedRoll));
