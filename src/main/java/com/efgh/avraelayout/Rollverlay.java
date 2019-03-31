@@ -1,24 +1,35 @@
 package com.efgh.avraelayout;
 
+import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
-import com.efgh.avraelayout.ui.sections.footer.RollingGui;
+import com.efgh.avraelayout.ui.sections.footer.RollBar;
 import com.efgh.avraelayout.ui.tabs.*;
 import com.efgh.avraelayout.ui.tabs.attributes.AttributesTab;
 import com.efgh.avraelayout.ui.tabs.diceroller.DiceRollerTab;
+import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTabPane;
+import de.jensd.fx.glyphs.GlyphIcon;
+import de.jensd.fx.glyphs.GlyphsBuilder;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.IOException;
 
 import static javafx.stage.Screen.getPrimary;
 
 public class Rollverlay extends Application {
 
     private static JFXTabPane tabPane = new JFXTabPane();
-    private static StackPane CONTENT_PANE = new StackPane();
+    private static BorderPane APP_CONTAINER = new BorderPane();
 
     private Themes selectedTheme = Themes.TRADITIONAL;
 
@@ -34,15 +45,20 @@ public class Rollverlay extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BorderPane border = new BorderPane();
-        setParentWindowProperties(border, primaryStage);
+        setParentWindowProperties(APP_CONTAINER, primaryStage);
 
-        border.setTop(new Header(primaryStage));
+        APP_CONTAINER.setTop(new Header(primaryStage));
+        try {
+            ConfigGateway.initializeConfiguration();
+        } catch (IOException e) {
+            showSnackBar("ERROR READING SAVED CONFIGURATION", true);
+        }
 
-        CONTENT_PANE.getChildren().add(getContentPane());
-        border.setCenter(CONTENT_PANE);
+        StackPane centerPane = new StackPane();
+        centerPane.getChildren().add(getContentPane());
+        APP_CONTAINER.setCenter(centerPane);
 
-        Scene scene = new Scene(border, SCREEN_WIDTH, SCREEN_HEIGHT);
+        Scene scene = new Scene(APP_CONTAINER, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().addAll(selectedTheme.getCssList());
 
         primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
@@ -65,7 +81,7 @@ public class Rollverlay extends Application {
         contentPane.getRowConstraints().addAll(row0);
 
         contentPane.add(tabPane, 0, 0, 2, 1);
-        contentPane.add(new RollingGui(), 0,1,1,1);
+        contentPane.add(new RollBar(), 0, 1, 1, 1);
 
         return contentPane;
     }
@@ -97,7 +113,27 @@ public class Rollverlay extends Application {
         return ((Rollable) tabPane.getSelectionModel().getSelectedItem()).getRollExpression();
     }
 
+    public static void showSnackBar(String message, boolean isWarning) {
+        HBox snackBarContent = new HBox();
+        snackBarContent.getStyleClass().add("snackBar");
+        if (isWarning) {
+            final GlyphIcon heartIcon = GlyphsBuilder.create(FontAwesomeIconView.class)
+                    .glyph(FontAwesomeIcon.WARNING)
+                    .size("55px")
+                    .styleClass("snack-bar")
+                    .build();
+
+            snackBarContent.getChildren().add(heartIcon);
+        }
+        Text snackBarText = new Text(StringUtils.left(message, 50));
+        snackBarText.getStyleClass().add("snack-bar");
+        snackBarContent.getChildren().add(snackBarText);
+
+        JFXSnackbar snackBar = new JFXSnackbar((Pane) APP_CONTAINER.getTop());
+        snackBar.enqueue(new JFXSnackbar.SnackbarEvent(snackBarContent, Duration.seconds(2), null));
+    }
+
     public static StackPane getDialogPane() {
-        return CONTENT_PANE;
+        return (StackPane) APP_CONTAINER.getCenter();
     }
 }

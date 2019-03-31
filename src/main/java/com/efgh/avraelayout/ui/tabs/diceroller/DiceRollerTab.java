@@ -1,6 +1,7 @@
 package com.efgh.avraelayout.ui.tabs.diceroller;
 
 import com.efgh.avraelayout.entities.DiceRoll;
+import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.components.ConfirmationDialog;
 import com.efgh.avraelayout.ui.tabs.Rollable;
 import com.jfoenix.controls.JFXButton;
@@ -21,10 +22,9 @@ import java.util.stream.Collectors;
 
 public class DiceRollerTab extends Tab implements Rollable {
     private FlowPane savedRollsButtons = new FlowPane();
-    private List<DiceRoll> diceRolls = new ArrayList<>();
+    private List<DiceRoll> diceRolls = ConfigGateway.getDiceRolls();
 
     private List<DiePanel> dice = new ArrayList<>();
-    private String diceToRoll = "";
 
     private DiePanel d2 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d2.png")), 2);
     private DiePanel d4 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d4.png")), 4);
@@ -119,7 +119,7 @@ public class DiceRollerTab extends Tab implements Rollable {
 
     private void saveDiceRoll() {
         DiceRoll rollToSave = getRollToSave();
-        RollSavePopup savePopup = new RollSavePopup(diceRolls, rollToSave);
+        RollSavePopup savePopup = new RollSavePopup(rollToSave);
         savePopup.setOnAcceptAction(e -> {
                     JFXButton savedRollBtn = createSavedRollBtn(rollToSave);
                     savedRollsButtons.getChildren().add(savedRollBtn);

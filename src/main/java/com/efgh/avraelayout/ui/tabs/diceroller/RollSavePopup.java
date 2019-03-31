@@ -1,6 +1,8 @@
 package com.efgh.avraelayout.ui.tabs.diceroller;
 
+import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.entities.DiceRoll;
+import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -13,7 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.apache.commons.lang3.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +28,11 @@ class RollSavePopup {
     private JFXTextField rollName = new JFXTextField();
     private JFXButton okay;
     private DiceRoll rollToSave;
-    private List<DiceRoll> diceRolls;
 
-    RollSavePopup(List<DiceRoll> diceRolls, DiceRoll rollToSave) {
+    RollSavePopup(DiceRoll rollToSave) {
         List<JFXButton> actionBtns = new ArrayList<>();
         this.rollToSave = rollToSave;
-        this.diceRolls = diceRolls;
+
 
         rollName.setLabelFloat(true);
         rollName.setPromptText("Roll name");
@@ -43,9 +46,12 @@ class RollSavePopup {
         rollName.getValidators().add(validator);
         rollName.validate();
         rollName.textProperty().addListener((o, oldVal, newVal) -> {
-            if(rollName.validate()){
+            if (newVal.length() > 20) {
+                rollName.setText(StringUtils.left(newVal, 20));
+            }
+            if (rollName.validate()) {
                 okay.setDisable(false);
-            }else{
+            } else {
                 okay.setDisable(true);
             }
         });
@@ -78,7 +84,11 @@ class RollSavePopup {
         okay.setOnAction(action);
         okay.setOnMousePressed(event -> {
             rollToSave.setRollName(rollName.getText());
-            this.diceRolls.add(rollToSave);
+            try {
+                ConfigGateway.addDiceRoll(rollToSave);
+            } catch (IOException e) {
+                Rollverlay.showSnackBar("ERROR SAVING CONFIGURATION", true);
+            }
             jfxDialog.close();
         });
     }

@@ -26,12 +26,12 @@ class ManualModifierToggleButton extends JFXToggleNode {
     }
 
     private void setIcon(GlyphIcons icon) {
-        final GlyphIcon heartIcon = GlyphsBuilder.create(FontAwesomeIconView.class)
+        final GlyphIcon materialIcon = GlyphsBuilder.create(FontAwesomeIconView.class)
                 .glyph(icon)
                 .size("55px")
                 .build();
-        heartIcon.setStyleClass("jfx-toggle-node-icon");
-        setGraphic(heartIcon);
+        materialIcon.setStyleClass("jfx-toggle-node-icon");
+        setGraphic(materialIcon);
     }
 
     String getModifierExpression() {

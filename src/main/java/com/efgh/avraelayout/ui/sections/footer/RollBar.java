@@ -3,25 +3,22 @@ package com.efgh.avraelayout.ui.sections.footer;
 import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXSnackbar;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RollingGui extends HBox {
+public class RollBar extends HBox {
 
     private List<ManualModifierTextField> manualModifiers = new ArrayList<>();
     private List<ManualModifierToggleButton> toggleModifiers = new ArrayList<>();
 
-    public RollingGui() {
+    public RollBar() {
         getStyleClass().add("rolling-bar");
 
         final Pane spacer = new Pane();
@@ -46,15 +43,14 @@ public class RollingGui extends HBox {
     }
 
     private void copyRoll() {
-        JFXSnackbar snackbar = new JFXSnackbar(this);
         String rollExpression = Rollverlay.getRollExpresion();
         if (StringUtils.isNotEmpty(rollExpression)) {
             rollExpression = String.join(" ", rollExpression, getManualModifiers(), getToggleModifiers()).trim();
-            System.out.println(rollExpression);
             ClipboardHelper.copyTextToClipBoard(rollExpression);
-            snackbar.enqueue(new JFXSnackbar.SnackbarEvent(new Text(rollExpression + " copied to clipboard."), Duration.seconds(1), null));
+            Rollverlay.showSnackBar("Roll expression copied to clipboard.", false);
+        } else {
+            Rollverlay.showSnackBar("No valid expression to copy.", true);
         }
-        snackbar.enqueue(new JFXSnackbar.SnackbarEvent(new Text("No valid expression to copy."), Duration.seconds(1), null));
     }
 
     private String getManualModifiers() {

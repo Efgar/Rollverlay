@@ -1,5 +1,7 @@
 package com.efgh.avraelayout.entities;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,14 @@ public class DiceRoll {
     private String d12;
     private String d20;
 
-    public DiceRoll(String savedRoll){
-        String splitSavedRoll[] = savedRoll.split(",");
+    /**
+     * Initialize a dice roll given a string with the format "Rollname,d2,d4,d6,d8,d10,d12,d20"
+     *
+     * @param savedRoll String containing the dice roll to initialize
+     */
+    public DiceRoll(String savedRoll) {
+        System.out.println(savedRoll);
+        String splitSavedRoll[] = StringUtils.split(savedRoll, ",");
         this.rollName = splitSavedRoll[0];
         this.d2 = splitSavedRoll[1];
         this.d4 = splitSavedRoll[2];
@@ -39,6 +47,10 @@ public class DiceRoll {
         this.d20 = d20;
     }
 
+    /**
+     * Dice roll in the format: Rollname,d2,d4,d6,d8,d10,d12,d20
+     * @return String containing the dice roll
+     */
     public String getSavedRollString(){
         return String.join(",", rollName, d2, d4, d6, d8, d10, d12, d20);
     }
