@@ -4,6 +4,7 @@ import com.efgh.avraelayout.entities.Attribute;
 import javafx.scene.input.MouseButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SkillPanelGroup {
@@ -16,6 +17,7 @@ public class SkillPanelGroup {
             skill.setSelected(e.getButton() == MouseButton.PRIMARY);
         });
         panelGroup.add(skill);
+        Collections.sort(panelGroup);
     }
 
     String getRollExpression() {
@@ -28,7 +30,6 @@ public class SkillPanelGroup {
     }
 
     List<SkillPanel> getAttributePanels() {
-        //TODO sort!
         return panelGroup;
     }
 }

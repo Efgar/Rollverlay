@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-class SkillPanel extends VBox {
+class SkillPanel extends VBox implements Comparable<SkillPanel>{
     private static String SELECTED_CLASS = "clickable-pane-selected";
 
     private Text skillName = new Text();
@@ -58,4 +58,8 @@ class SkillPanel extends VBox {
         return String.join(" ", "!check", skillName.getText(), skillModifierCombo.getSelectedValue());
     }
 
+    @Override
+    public int compareTo(SkillPanel panel) {
+        return this.skillName.getText().compareTo(panel.skillName.getText());
+    }
 }
