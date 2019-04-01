@@ -3,13 +3,13 @@
 }
 
 .hbox, .vbox {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
     -fx-padding: 4;
     -fx-spacing: 3;
 }
 
 .snackBar {
-    -fx-background-color: BLACK;
+    -fx-background-color: -secondary-color;
     -fx-padding: 4;
     -fx-spacing: 3;
     -fx-background-radius: 5;
@@ -17,27 +17,27 @@
 }
 
 .popup {
-    -fx-background-color: WHITE;
+    -fx-background-color: -support-color;
 }
 
 .rolling-bar {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
     -fx-padding: 5;
-    -fx-border-color: RED;
+    -fx-border-color: -highlight-color;
     -fx-border-style: solid;
     -fx-border-width: 3 0 0 0;
     -fx-spacing: 7;
 }
 
 .attributes-box {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
     -fx-hgap: 5;
     -fx-vgap: 5;
     -fx-padding: 3;
 }
 
 .flowPane {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
     -fx-hgap: 5;
     -fx-vgap: 5;
     -fx-padding: 3 15 3 3;

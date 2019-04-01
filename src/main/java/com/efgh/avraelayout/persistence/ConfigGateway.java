@@ -1,6 +1,8 @@
 package com.efgh.avraelayout.persistence;
 
 import com.efgh.avraelayout.entities.DiceRoll;
+import com.efgh.avraelayout.ui.css.Themes;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
@@ -22,14 +24,16 @@ public class ConfigGateway {
     public static void initializeConfiguration() throws IOException {
         appProperties.load(new FileInputStream(appConfigPath));
 
-        //Initialize saved rolls
         String[] savedRollsCfg = StringUtils.defaultIfEmpty(appProperties.getProperty(SAVED_ROLLS_PROPERTY), "").split(SEPARATOR, -1);
         for (String savedRoll : savedRollsCfg) {
             if (StringUtils.isNotEmpty(savedRoll)) {
                 savedRolls.add(new DiceRoll(savedRoll));
             }
         }
+    }
 
+    public static Themes getConfiguredTheme(){
+        return ObjectUtils.defaultIfNull(Themes.getTheme(appProperties.getProperty("com.efgh.rollverlay.theme")), Themes.TRADITIONAL);
     }
 
     public static List<DiceRoll> getDiceRolls() {

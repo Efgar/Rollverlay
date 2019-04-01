@@ -36,4 +36,13 @@ public enum Themes {
         }
         return cssList;
     }
+
+    public static Themes getTheme(String themeName){
+        for (Themes theme:Themes.values()){
+            if(theme.folder.equalsIgnoreCase(themeName)){
+                return theme;
+            }
+        }
+        return null;
+    }
 }

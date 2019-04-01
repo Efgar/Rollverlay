@@ -54,6 +54,7 @@ public class Rollverlay extends Application {
         APP_CONTAINER.setTop(new Header(primaryStage));
         try {
             ConfigGateway.initializeConfiguration();
+            selectedTheme = ConfigGateway.getConfiguredTheme();
         } catch (IOException e) {
             showSnackBar("ERROR READING SAVED CONFIGURATION", true);
         }
