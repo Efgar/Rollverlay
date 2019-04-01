@@ -1,5 +1,5 @@
 .jfx-toggle-node {
-    -jfx-toggle-color: WHITE;
+    -jfx-toggle-color: -support-color;
     -fx-padding: 5;
     -fx-background-radius: 50%;
     -fx-alignment: center;

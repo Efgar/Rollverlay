@@ -1,0 +1,29 @@
+.main-action{
+    -fx-background-color: -highlight-color;
+    -fx-text-fill:-main-text-color;
+    -fx-font-weight:bold;
+}
+
+.secondary-action{
+    -fx-background-color: -secondary-color;
+    -fx-text-fill:-main-text-color;
+    -fx-font-weight:bold;
+}
+
+.support-actions{
+    -fx-background-color:-support-color;
+    -fx-text-fill:-main-color;
+    -fx-font-weight:bold;
+}
+
+.jfx-toggle-button {
+    -fx-font-weight: BOLD;
+    -fx-fill: -support-color;
+    -fx-text-fill: -main-text-color;
+    -jfx-toggle-color: -support-color;
+    -jfx-untoggle-color: -secondary-color;
+    -jfx-toggle-line-color: #999999;
+    -jfx-untoggle-line-color: #999999;
+    -jfx-size: 5.0;
+    -jfx-disable-visual-focus: false;
+}

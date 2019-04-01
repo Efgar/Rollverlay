@@ -1,6 +1,6 @@
 package com.efgh.avraelayout.ui.tabs.skills;
 
-import com.jfoenix.controls.JFXComboBox;
+import com.efgh.avraelayout.entities.Attribute;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
@@ -10,11 +10,12 @@ import javafx.scene.text.Text;
 
 public class SkillPanel extends VBox {
     private Text skillName = new Text();
-    private JFXComboBox<String> attributeOptions = new JFXComboBox<>();
+    private SkillModifierCombo skillModifierCombo;
     private static String SELECTED_CLASS = "clickable-pane-selected";
     private boolean isSelected = true;
 
-    public SkillPanel(String skill) {
+    public SkillPanel(String skill, Attribute defaultAttribute) {
+        skillModifierCombo = new SkillModifierCombo(defaultAttribute);
         getStyleClass().add("clickable-pane");
         skillName.setText(skill);
         getChildren().add(skillName);
@@ -28,12 +29,13 @@ public class SkillPanel extends VBox {
     void setSelected(boolean isSelected) {
         if (isSelected) {
             getStyleClass().add(SELECTED_CLASS);
-            getChildren().add(attributeOptions);
+            skillModifierCombo.reset();
+            getChildren().add(skillModifierCombo);
             this.isSelected = true;
             skillName.setEffect(new DropShadow(5, Color.BLACK));
         } else {
             getStyleClass().remove(SELECTED_CLASS);
-            getChildren().remove(attributeOptions);
+            getChildren().remove(skillModifierCombo);
             this.isSelected = false;
             skillName.setEffect(null);
         }
@@ -44,7 +46,7 @@ public class SkillPanel extends VBox {
     }
 
     String getRollExpression() {
-        return String.join(" ", "!check", skillName.getText(), attributeOptions.getValue());
+        return String.join(" ", "!check", skillName.getText(), skillModifierCombo.getSelectedValue());
     }
 
 }

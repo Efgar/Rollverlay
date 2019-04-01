@@ -29,6 +29,13 @@
     -fx-spacing: 7;
 }
 
+.attributes-box {
+    -fx-background-color: DARKRED;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+    -fx-padding: 3;
+}
+
 .flowPane {
     -fx-background-color: DARKRED;
     -fx-hgap: 5;
@@ -46,7 +53,7 @@
 }
 
 .scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
-    -fx-background-color: WHITE;
+    -fx-background-color: -support-color;
     -fx-background-radius: 5em;
 }
 
@@ -57,11 +64,11 @@
 }
 
 .clickable-pane-selected {
-    -fx-background-color: RED;
+    -fx-background-color: -highlight-color;
 }
 
 .clickable-pane:hover {
-    -fx-background-color: RED;
+    -fx-background-color: -highlight-color;
 }
 
 .image-container {

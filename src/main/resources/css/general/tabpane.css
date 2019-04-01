@@ -1,28 +1,28 @@
 .jfx-tab-pane .headers-region
 {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
 }
 
 .jfx-tab-pane .tab-header-background
 {
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
 }
 
 .jfx-tab-pane .tab-header-area .jfx-rippler
 {
-    -jfx-rippler-fill: DARKRED;
+    -jfx-rippler-fill: -main-color;
 }
 
 .jfx-tab-pane .tab-header-area .tab-selected-line
 {
-    -fx-stroke: DARKRED;
+    -fx-stroke: -main-color;
 }
 
 .jfx-tab-pane .tab-selected-line {
-     -fx-background-color: RED;
+     -fx-background-color: -highlight-color;
      -fx-pref-height: 5;
  }
 
 .jfx-tab-pane .tab-header-area .control-buttons-tab .tab-down-button{
-    -fx-background-color: DARKRED;
+    -fx-background-color: -main-color;
 }

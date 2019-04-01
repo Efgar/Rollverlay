@@ -1,5 +1,6 @@
 package com.efgh.avraelayout.ui.tabs.attributes;
 
+import com.efgh.avraelayout.entities.Attribute;
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -20,16 +21,16 @@ class AttributePanel extends VBox {
     private String attributeExpression;
     private boolean isSelected = true;
 
-    AttributePanel(Image image, String attributeName, String attributeExpression) {
+    AttributePanel(Image image, Attribute attribute) {
         getStyleClass().add("clickable-pane");
-        this.attributeExpression = attributeExpression;
+        this.attributeExpression = attribute.getCode();
         toggleButton.setText("SAVE");
         toggleButton.setSize(5);
         toggleButton.setSelected(true);
 
         setAlignment(Pos.CENTER);
 
-        attributeText.setText(attributeName);
+        attributeText.setText(attribute.getDisplayValue());
         attributeText.getStyleClass().add("image-button-label");
 
         getChildren().add(attributeText);
