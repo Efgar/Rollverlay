@@ -8,18 +8,27 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class SkillPanel extends VBox {
+class SkillPanel extends VBox {
+    private static String SELECTED_CLASS = "clickable-pane-selected";
+
     private Text skillName = new Text();
     private SkillModifierCombo skillModifierCombo;
-    private static String SELECTED_CLASS = "clickable-pane-selected";
     private boolean isSelected = true;
 
-    public SkillPanel(String skill, Attribute defaultAttribute) {
+    SkillPanel(String skill, Attribute defaultAttribute) {
+        setSkillPaneSize();
         skillModifierCombo = new SkillModifierCombo(defaultAttribute);
         getStyleClass().add("clickable-pane");
+        getStyleClass().add("skill-pane");
         skillName.setText(skill);
+        skillName.getStyleClass().add("skill_label");
         getChildren().add(skillName);
         setSelected(false);
+    }
+
+    private void setSkillPaneSize(){
+        setPrefWidth(110);
+        setMaxWidth(110);
     }
 
     void setOnClickAction(EventHandler<? super MouseEvent> action) {
@@ -28,8 +37,8 @@ public class SkillPanel extends VBox {
 
     void setSelected(boolean isSelected) {
         if (isSelected) {
-            getStyleClass().add(SELECTED_CLASS);
             skillModifierCombo.reset();
+            getStyleClass().add(SELECTED_CLASS);
             getChildren().add(skillModifierCombo);
             this.isSelected = true;
             skillName.setEffect(new DropShadow(5, Color.BLACK));

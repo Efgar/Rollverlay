@@ -57,6 +57,11 @@
     -fx-background-radius: 5em;
 }
 
+.skill-pane {
+    -fx-padding: 4;
+    -fx-spacing: 3;
+}
+
 .clickable-pane {
     -fx-background-color: TRANSPARENT;
     -fx-background-radius: 5;

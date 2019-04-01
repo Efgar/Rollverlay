@@ -5,7 +5,8 @@ import com.jfoenix.controls.JFXComboBox;
 
 public class SkillModifierCombo extends JFXComboBox<Attribute> {
     Attribute defaultValue;
-    public SkillModifierCombo(Attribute defaultValue){
+
+    public SkillModifierCombo(Attribute defaultValue) {
         this.defaultValue = defaultValue;
         addSkillModifierValue(Attribute.STR);
         addSkillModifierValue(Attribute.DEX);
@@ -16,15 +17,15 @@ public class SkillModifierCombo extends JFXComboBox<Attribute> {
         reset();
     }
 
-    private void addSkillModifierValue(Attribute attribute){
+    private void addSkillModifierValue(Attribute attribute) {
         getItems().add(attribute);
     }
 
-    void reset(){
+    void reset() {
         getSelectionModel().select(defaultValue);
     }
 
-    String getSelectedValue(){
-        return getValue().getCode();
+    String getSelectedValue() {
+        return getValue() == defaultValue ? "" : getValue().getCode();
     }
 }

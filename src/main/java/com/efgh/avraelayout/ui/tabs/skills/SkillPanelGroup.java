@@ -12,7 +12,7 @@ public class SkillPanelGroup {
     void addSkillButton(String skillName, Attribute defaultAttribute) {
         SkillPanel skill = new SkillPanel(skillName, defaultAttribute);
         skill.setOnClickAction(e -> {
-            panelGroup.forEach(attr -> attr.setSelected(false));
+            panelGroup.forEach(skl -> skl.setSelected(false));
             skill.setSelected(e.getButton() == MouseButton.PRIMARY);
         });
         panelGroup.add(skill);
@@ -28,6 +28,7 @@ public class SkillPanelGroup {
     }
 
     List<SkillPanel> getAttributePanels() {
+        //TODO sort!
         return panelGroup;
     }
 }

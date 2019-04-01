@@ -26,6 +26,6 @@ public enum Attribute {
 
     @Override
     public String toString() {
-        return getDisplayValue();
+        return this.key;
     }
 }
