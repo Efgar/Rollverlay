@@ -1,7 +1,6 @@
-package com.efgh.avraelayout.ui.tabs.diceroller;
+package com.efgh.avraelayout.ui.tabs.custom;
 
 import com.efgh.avraelayout.Rollverlay;
-import com.efgh.avraelayout.entities.DiceRoll;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -23,19 +22,21 @@ import java.util.List;
 
 import static com.efgh.avraelayout.Rollverlay.getDialogPane;
 
-class RollSavePopup extends JFXDialog {
+class CustomRollSavePopup extends JFXDialog {
     private JFXTextField rollName = new JFXTextField();
-    private JFXButton okay;
-    private DiceRoll rollToSave;
+    private JFXTextField rollExpression = new JFXTextField();
+    private JFXButton okay = new JFXButton("OK");
 
-    RollSavePopup(DiceRoll rollToSave) {
+    CustomRollSavePopup() {
         super(getDialogPane(), new JFXDialogLayout(), JFXDialog.DialogTransition.CENTER);
-        List<JFXButton> actionBtns = new ArrayList<>();
-        this.rollToSave = rollToSave;
 
+        List<JFXButton> actionBtns = new ArrayList<>();
 
         rollName.setLabelFloat(true);
         rollName.setPromptText("Roll name");
+
+        rollExpression.setLabelFloat(true);
+        rollExpression.setPromptText("Roll expression");
 
         RequiredFieldValidator validator = new RequiredFieldValidator();
         validator.setMessage("Input Required");
@@ -45,16 +46,28 @@ class RollSavePopup extends JFXDialog {
 
         rollName.getValidators().add(validator);
         rollName.validate();
+
+        rollExpression.getValidators().add(validator);
+        rollExpression.validate();
+
         rollName.textProperty().addListener((o, oldVal, newVal) -> {
             if (newVal.length() > 20) {
                 rollName.setText(StringUtils.left(newVal, 20));
             }
-            okay.setDisable(!rollName.validate());
+            okay.setDisable(isNotValidInput());
+        });
+
+        rollExpression.textProperty().addListener((o, oldVal, newVal) -> {
+            if (newVal.length() > 100) {
+                rollExpression.setText(StringUtils.left(newVal, 100));
+            }
+            okay.setDisable(isNotValidInput());
         });
 
         VBox saveBody = new VBox();
-        saveBody.getChildren().add(new Text(String.format("Please assign a name for the dice roll (%s)\n", rollToSave.getRollExpression())));
+        saveBody.getChildren().add(new Text("Please enter a expression to save and a name for it.\n"));
         saveBody.getChildren().add(rollName);
+        saveBody.getChildren().add(rollExpression);
 
         JFXButton cancel = new JFXButton("CANCEL");
         cancel.getStyleClass().add("secondary-action");
@@ -62,23 +75,25 @@ class RollSavePopup extends JFXDialog {
         cancel.setOnAction(event -> close());
         actionBtns.add(cancel);
 
-        okay = new JFXButton("OK");
         okay.getStyleClass().add("secondary-action");
         okay.setButtonType(JFXButton.ButtonType.RAISED);
         okay.setDisable(true);
         actionBtns.add(okay);
 
-        ((JFXDialogLayout) getContent()).setHeading(new Text("Save dice roll"));
+        ((JFXDialogLayout) getContent()).setHeading(new Text("Save custom expression"));
         ((JFXDialogLayout) getContent()).setBody(saveBody);
         ((JFXDialogLayout) getContent()).setActions(actionBtns);
+    }
+
+    private boolean isNotValidInput() {
+        return !(rollName.validate() && rollExpression.validate());
     }
 
     void setOnAcceptAction(EventHandler<ActionEvent> action) {
         okay.setOnAction(action);
         okay.setOnMousePressed(event -> {
-            rollToSave.setRollName(rollName.getText());
             try {
-                ConfigGateway.addDiceRoll(rollToSave);
+                ConfigGateway.addCustomRollExpression(rollName.getText(), rollExpression.getText());
             } catch (IOException e) {
                 Rollverlay.showSnackBar("ERROR SAVING CONFIGURATION", true);
             }

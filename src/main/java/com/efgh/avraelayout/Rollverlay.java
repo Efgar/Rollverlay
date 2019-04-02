@@ -8,7 +8,7 @@ import com.efgh.avraelayout.ui.tabs.Attacks;
 import com.efgh.avraelayout.ui.tabs.RollableTab;
 import com.efgh.avraelayout.ui.tabs.Spells;
 import com.efgh.avraelayout.ui.tabs.attributes.AttributesTab;
-import com.efgh.avraelayout.ui.tabs.custom.Custom;
+import com.efgh.avraelayout.ui.tabs.custom.CustomExpressionTab;
 import com.efgh.avraelayout.ui.tabs.diceroller.DiceRollerTab;
 import com.efgh.avraelayout.ui.tabs.skills.SkillsTab;
 import com.jfoenix.controls.JFXSnackbar;
@@ -96,7 +96,7 @@ public class Rollverlay extends Application {
         tabPane.getTabs().add(new DiceRollerTab());
         tabPane.getTabs().add(new AttributesTab());
         tabPane.getTabs().add(new SkillsTab());
-        tabPane.getTabs().add(new Custom());
+        tabPane.getTabs().add(new CustomExpressionTab());
         tabPane.getTabs().add(new Attacks());
         tabPane.getTabs().add(new Spells());
         tabPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);

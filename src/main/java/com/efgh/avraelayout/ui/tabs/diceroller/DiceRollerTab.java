@@ -39,11 +39,9 @@ public class DiceRollerTab extends RollableTab {
         setText("Dice Roller");
         VBox tabContent = new VBox();
         tabContent.setPrefHeight(Double.MAX_VALUE);
-        tabContent.getStyleClass().add("test2");
         addDiceButtonsPane(tabContent);
         addDiceOptionsPane(tabContent);
         setContent(tabContent);
-        getContent().getStyleClass().add("test2");
     }
 
     private void createDiceButtons() {

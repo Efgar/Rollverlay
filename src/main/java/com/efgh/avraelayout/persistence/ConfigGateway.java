@@ -19,6 +19,7 @@ public class ConfigGateway {
     private static final String SEPARATOR = ";";
 
     private static final String SAVED_ROLLS_PROPERTY = "com.efgh.rollverlay.storage.rolls";
+    private static final String SAVED_EXPRESSIONS_PROPERTY = "com.efgh.rollverlay.storage.expressions";
     private static List<DiceRoll> savedRolls = new ArrayList<>();
 
     public static void initializeConfiguration() throws IOException {
@@ -52,5 +53,15 @@ public class ConfigGateway {
 
     private static void updateConfigurationFile() throws IOException {
         appProperties.store(new FileWriter(appConfigPath), "Updating configuration files");
+    }
+
+    public static void addCustomRollExpression(String rollExpressionName, String rollExpressionValue) throws IOException {
+        if (StringUtils.isBlank(rollExpressionName) || StringUtils.isBlank(rollExpressionValue)) {
+            throw new IOException("Invalid values for the custom roll");
+        }
+        //TODO custom expression handling
+        //savedRolls.add(rollToSave);
+        appProperties.setProperty(SAVED_EXPRESSIONS_PROPERTY, getDiceRollSavingString());
+        updateConfigurationFile();
     }
 }
