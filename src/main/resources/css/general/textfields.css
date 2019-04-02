@@ -11,3 +11,15 @@
     -jfx-unfocus-color: -main-text-color;
     -fx-prompt-text-fill: BLACK;
 }
+
+.combo-box > .list-cell {
+    -fx-text-fill: -main-text-color;
+}
+
+.jfx-combo-box {
+    -fx-fill: -main-text-color;
+    -fx-font-weight: BOLD;
+    -fx-text-fill: -main-text-color;
+    -jfx-focus-color: -main-text-color;
+    -jfx-unfocus-color: -main-text-color;
+}

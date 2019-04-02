@@ -7,6 +7,7 @@ public class SkillModifierCombo extends JFXComboBox<Attribute> {
     Attribute defaultValue;
 
     public SkillModifierCombo(Attribute defaultValue) {
+        getStyleClass().add("attributes-combo-box");
         this.defaultValue = defaultValue;
         addSkillModifierValue(Attribute.STR);
         addSkillModifierValue(Attribute.DEX);
