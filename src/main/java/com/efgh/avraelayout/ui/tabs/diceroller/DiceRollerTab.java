@@ -3,10 +3,11 @@ package com.efgh.avraelayout.ui.tabs.diceroller;
 import com.efgh.avraelayout.entities.DiceRoll;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.components.ConfirmationDialog;
-import com.efgh.avraelayout.ui.tabs.Rollable;
+import com.efgh.avraelayout.ui.tabs.RollableTab;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.SimpleRollingExpressionStrategy;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DiceRollerTab extends Tab implements Rollable {
+public class DiceRollerTab extends RollableTab {
     private FlowPane savedRollsButtons = new FlowPane();
     private List<DiceRoll> diceRolls = ConfigGateway.getDiceRolls();
 
@@ -162,12 +163,11 @@ public class DiceRollerTab extends Tab implements Rollable {
         dice.forEach(DiePanel::reset);
     }
 
-    @Override
-    public String getRollExpression() {
-        String rollExpression = dice.stream().map(DiePanel::getDiceToRollExpression).filter(StringUtils::isNotEmpty).collect(Collectors.joining("+"));
-        if (StringUtils.isNotEmpty(rollExpression)) {
-            return "!roll " + rollExpression;
-        }
-        return "";
+    protected String getBaseRollExpression() {
+        return dice.stream().map(DiePanel::getDiceToRollExpression).filter(StringUtils::isNotEmpty).collect(Collectors.joining("+"));
+    }
+
+    protected RollingExpressionStrategy getRollingExpressionStrategy() {
+        return new SimpleRollingExpressionStrategy();
     }
 }

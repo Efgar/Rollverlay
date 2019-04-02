@@ -1,12 +1,13 @@
 package com.efgh.avraelayout.ui.tabs.skills;
 
 import com.efgh.avraelayout.entities.Attribute;
-import com.efgh.avraelayout.ui.tabs.Rollable;
+import com.efgh.avraelayout.ui.tabs.RollableTab;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.AttributesRollingExpressionStrategy;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.FlowPane;
 
-public class SkillsTab extends Tab implements Rollable {
+public class SkillsTab extends RollableTab {
     private SkillPanelGroup skills = new SkillPanelGroup();
 
     public SkillsTab() {
@@ -43,8 +44,11 @@ public class SkillsTab extends Tab implements Rollable {
         setContent(attributesBox);
     }
 
-    @Override
-    public String getRollExpression() {
+    protected String getBaseRollExpression() {
         return skills.getRollExpression();
+    }
+
+    protected RollingExpressionStrategy getRollingExpressionStrategy() {
+        return new AttributesRollingExpressionStrategy();
     }
 }

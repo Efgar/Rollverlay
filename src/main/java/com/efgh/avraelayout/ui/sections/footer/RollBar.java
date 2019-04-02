@@ -43,9 +43,8 @@ public class RollBar extends HBox {
     }
 
     private void copyRoll() {
-        String rollExpression = Rollverlay.getRollExpresion();
+        String rollExpression = Rollverlay.getRollExpression(getToggleModifiers(), getManualModifiers());
         if (StringUtils.isNotEmpty(rollExpression)) {
-            rollExpression = String.join(" ", rollExpression, getManualModifiers(), getToggleModifiers()).trim();
             ClipboardHelper.copyTextToClipBoard(rollExpression);
             Rollverlay.showSnackBar("Roll expression copied to clipboard.", false);
         } else {

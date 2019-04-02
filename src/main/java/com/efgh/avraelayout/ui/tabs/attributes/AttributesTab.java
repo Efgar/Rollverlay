@@ -1,12 +1,13 @@
 package com.efgh.avraelayout.ui.tabs.attributes;
 
 import com.efgh.avraelayout.entities.Attribute;
-import com.efgh.avraelayout.ui.tabs.Rollable;
-import javafx.scene.control.Tab;
+import com.efgh.avraelayout.ui.tabs.RollableTab;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.AttributesRollingExpressionStrategy;
+import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 
-public class AttributesTab extends Tab implements Rollable {
+public class AttributesTab extends RollableTab {
     private AttributePanelGroup attributes = new AttributePanelGroup();
     public AttributesTab() {
         setText("Attribute");
@@ -25,8 +26,11 @@ public class AttributesTab extends Tab implements Rollable {
         setContent(attributesBox);
     }
 
-    @Override
-    public String getRollExpression() {
+    protected String getBaseRollExpression() {
         return attributes.getRollExpression();
+    }
+
+    protected RollingExpressionStrategy getRollingExpressionStrategy() {
+        return new AttributesRollingExpressionStrategy();
     }
 }

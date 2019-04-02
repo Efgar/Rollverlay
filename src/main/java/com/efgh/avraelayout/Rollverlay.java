@@ -5,10 +5,10 @@ import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
 import com.efgh.avraelayout.ui.sections.footer.RollBar;
 import com.efgh.avraelayout.ui.tabs.Attacks;
-import com.efgh.avraelayout.ui.tabs.Custom;
-import com.efgh.avraelayout.ui.tabs.Rollable;
+import com.efgh.avraelayout.ui.tabs.RollableTab;
 import com.efgh.avraelayout.ui.tabs.Spells;
 import com.efgh.avraelayout.ui.tabs.attributes.AttributesTab;
+import com.efgh.avraelayout.ui.tabs.custom.Custom;
 import com.efgh.avraelayout.ui.tabs.diceroller.DiceRollerTab;
 import com.efgh.avraelayout.ui.tabs.skills.SkillsTab;
 import com.jfoenix.controls.JFXSnackbar;
@@ -33,6 +33,7 @@ import static javafx.stage.Screen.getPrimary;
 public class Rollverlay extends Application {
 
     private static JFXTabPane tabPane = new JFXTabPane();
+    private static RollBar footerBar = new RollBar();
     private static BorderPane APP_CONTAINER = new BorderPane();
 
     private Themes selectedTheme = Themes.TRADITIONAL;
@@ -86,7 +87,7 @@ public class Rollverlay extends Application {
         contentPane.getRowConstraints().addAll(row0);
 
         contentPane.add(tabPane, 0, 0, 2, 1);
-        contentPane.add(new RollBar(), 0, 1, 1, 1);
+        contentPane.add(footerBar, 0, 1, 1, 1);
 
         return contentPane;
     }
@@ -95,9 +96,9 @@ public class Rollverlay extends Application {
         tabPane.getTabs().add(new DiceRollerTab());
         tabPane.getTabs().add(new AttributesTab());
         tabPane.getTabs().add(new SkillsTab());
+        tabPane.getTabs().add(new Custom());
         tabPane.getTabs().add(new Attacks());
         tabPane.getTabs().add(new Spells());
-        tabPane.getTabs().add(new Custom());
         tabPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
@@ -114,8 +115,8 @@ public class Rollverlay extends Application {
         primaryStage.setAlwaysOnTop(true);
     }
 
-    public static String getRollExpresion() {
-        return ((Rollable) tabPane.getSelectionModel().getSelectedItem()).getRollExpression();
+    public static String getRollExpression(String selectableModifiers, String manualModifiers) {
+        return ((RollableTab) tabPane.getSelectionModel().getSelectedItem()).getRollExpression(selectableModifiers, manualModifiers);
     }
 
     public static void showSnackBar(String message, boolean isWarning) {
