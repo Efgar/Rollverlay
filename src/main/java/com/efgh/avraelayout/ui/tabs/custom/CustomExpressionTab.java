@@ -3,35 +3,53 @@ package com.efgh.avraelayout.ui.tabs.custom;
 import com.efgh.avraelayout.entities.CustomExpression;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.components.ConfirmationDialog;
-import com.efgh.avraelayout.ui.tabs.RollableTab;
-import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
+import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class CustomExpressionTab extends RollableTab {
+public class CustomExpressionTab extends Tab {
     private FlowPane savedExpressionsButtons = new FlowPane();
-    private List<CustomExpression> savedExpressions = ConfigGateway.getDiceRolls();
+    private List<CustomExpression> savedExpressions = ConfigGateway.getCustomRollExpressions();
 
     public CustomExpressionTab() {
         setText("Custom");
-        VBox tabContent = new VBox();
-        tabContent.setPrefHeight(Double.MAX_VALUE);
-        addSavedExpressions(tabContent);
-        setContent(tabContent);
+
+        HBox expressionButtons = new HBox();
+        expressionButtons.getStyleClass().add("hbox");
+        expressionButtons.setPrefHeight(Double.MAX_VALUE);
+
+        JFXButton saveRollButton = new JFXButton("Save");
+        saveRollButton.getStyleClass().add("secondary-action");
+        saveRollButton.setOnMouseClicked(e -> createCustomExpression());
+        saveRollButton.setMaxWidth(Double.MAX_VALUE);
+        saveRollButton.setPrefWidth(60);
+
+        VBox optionButtons = new VBox();
+        optionButtons.getStyleClass().add("vbox");
+        optionButtons.getChildren().addAll(saveRollButton);
+
+        expressionButtons.getChildren().add(getSavedExpressionsPanel());
+        expressionButtons.getChildren().add(optionButtons);
+        setContent(expressionButtons);
     }
 
-    private void addSavedExpressions(VBox tabContent) {
-        populateSavedExpressions();
+    private void createCustomExpression() {
+        CustomRollSavePopup savePopup = new CustomRollSavePopup();
+        savePopup.setOnAcceptAction(e -> populateSavedExpressions());
+        savePopup.show();
+    }
 
+    private ScrollPane getSavedExpressionsPanel() {
         savedExpressionsButtons.getStyleClass().add("flowPane");
-        savedExpressionsButtons.prefWrapLengthProperty().bind(tabContent.widthProperty());
-
+        populateSavedExpressions();
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.getStyleClass().add("hbox");
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -39,7 +57,7 @@ public class CustomExpressionTab extends RollableTab {
         scrollPane.setContent(savedExpressionsButtons);
 
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        tabContent.getChildren().add(scrollPane);
+        return scrollPane;
     }
 
     private void populateSavedExpressions() {
@@ -52,10 +70,10 @@ public class CustomExpressionTab extends RollableTab {
 
     private JFXButton createSavedExpressionBtn(CustomExpression customExpression) {
         JFXButton savedExpressionBtn = new JFXButton(customExpression.getExpressionName());
-        savedExpressionBtn.getStyleClass().add("support-actions");
+        savedExpressionBtn.getStyleClass().add("main-action");
         savedExpressionBtn.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                //TODO
+                ClipboardHelper.copyTextToClipBoard(customExpression.getExpression());
             } else {
                 removeCustomExpressionFromSaved(customExpression, savedExpressionBtn);
             }
@@ -68,17 +86,8 @@ public class CustomExpressionTab extends RollableTab {
         confirmationDialog.setOnAcceptAction(e -> {
             savedExpressions.remove(customExpression);
             savedExpressionsButtons.getChildren().remove(savedExpressionBtn);
+            ConfigGateway.updateConfigurationFile();
         });
         confirmationDialog.show();
-    }
-
-    @Override
-    protected String getBaseRollExpression() {
-        return null;
-    }
-
-    @Override
-    protected RollingExpressionStrategy getRollingExpressionStrategy() {
-        return null;
     }
 }

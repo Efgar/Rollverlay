@@ -1,6 +1,7 @@
 package com.efgh.avraelayout.ui.tabs.custom;
 
 import com.efgh.avraelayout.Rollverlay;
+import com.efgh.avraelayout.entities.CustomExpression;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
@@ -39,7 +40,6 @@ class CustomRollSavePopup extends JFXDialog {
         rollExpression.setPromptText("Roll expression");
 
         RequiredFieldValidator validator = new RequiredFieldValidator();
-        validator.setMessage("Input Required");
         validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class)
                 .glyph(FontAwesomeIcon.WARNING)
                 .build());
@@ -67,6 +67,7 @@ class CustomRollSavePopup extends JFXDialog {
         VBox saveBody = new VBox();
         saveBody.getChildren().add(new Text("Please enter a expression to save and a name for it.\n"));
         saveBody.getChildren().add(rollName);
+        saveBody.getChildren().add(new Text(""));
         saveBody.getChildren().add(rollExpression);
 
         JFXButton cancel = new JFXButton("CANCEL");
@@ -90,10 +91,10 @@ class CustomRollSavePopup extends JFXDialog {
     }
 
     void setOnAcceptAction(EventHandler<ActionEvent> action) {
-        okay.setOnAction(action);
         okay.setOnMousePressed(event -> {
             try {
-                ConfigGateway.addCustomRollExpression(rollName.getText(), rollExpression.getText());
+                ConfigGateway.addCustomRollExpression(new CustomExpression(rollName.getText(), rollExpression.getText()));
+                okay.setOnAction(action);
             } catch (IOException e) {
                 Rollverlay.showSnackBar("ERROR SAVING CONFIGURATION", true);
             }

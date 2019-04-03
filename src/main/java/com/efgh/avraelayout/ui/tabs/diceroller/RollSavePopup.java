@@ -1,6 +1,5 @@
 package com.efgh.avraelayout.ui.tabs.diceroller;
 
-import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.entities.DiceRoll;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.jfoenix.controls.JFXButton;
@@ -17,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,11 +75,7 @@ class RollSavePopup extends JFXDialog {
         okay.setOnAction(action);
         okay.setOnMousePressed(event -> {
             rollToSave.setRollName(rollName.getText());
-            try {
-                ConfigGateway.addDiceRoll(rollToSave);
-            } catch (IOException e) {
-                Rollverlay.showSnackBar("ERROR SAVING CONFIGURATION", true);
-            }
+            ConfigGateway.addDiceRoll(rollToSave);
             close();
         });
     }

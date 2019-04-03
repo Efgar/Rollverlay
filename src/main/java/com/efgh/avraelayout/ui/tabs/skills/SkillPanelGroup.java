@@ -17,6 +17,9 @@ public class SkillPanelGroup {
             skill.setSelected(e.getButton() == MouseButton.PRIMARY);
         });
         panelGroup.add(skill);
+    }
+
+    void sortSkills() {
         Collections.sort(panelGroup);
     }
 

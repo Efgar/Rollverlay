@@ -1,6 +1,6 @@
 package com.efgh.avraelayout.ui.sections.footer;
 
-import com.efgh.avraelayout.Rollverlay;
+import com.efgh.avraelayout.ui.tabs.RollableWithModsTab;
 import com.efgh.avraelayout.utils.ClipboardHelper;
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -17,8 +17,10 @@ public class RollBar extends HBox {
 
     private List<ManualModifierTextField> manualModifiers = new ArrayList<>();
     private List<ManualModifierToggleButton> toggleModifiers = new ArrayList<>();
+    private RollableWithModsTab rollableWithModsTab;
 
-    public RollBar() {
+    public RollBar(RollableWithModsTab rollableWithModsTab) {
+        this.rollableWithModsTab = rollableWithModsTab;
         getStyleClass().add("rolling-bar");
 
         final Pane spacer = new Pane();
@@ -43,13 +45,8 @@ public class RollBar extends HBox {
     }
 
     private void copyRoll() {
-        String rollExpression = Rollverlay.getRollExpression(getToggleModifiers(), getManualModifiers());
-        if (StringUtils.isNotEmpty(rollExpression)) {
-            ClipboardHelper.copyTextToClipBoard(rollExpression);
-            Rollverlay.showSnackBar("Roll expression copied to clipboard.", false);
-        } else {
-            Rollverlay.showSnackBar("No valid expression to copy.", true);
-        }
+        String rollExpression = rollableWithModsTab.getRollExpression(getToggleModifiers(), getManualModifiers());
+        ClipboardHelper.copyTextToClipBoard(rollExpression);
     }
 
     private String getManualModifiers() {

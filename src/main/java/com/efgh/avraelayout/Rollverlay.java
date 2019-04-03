@@ -3,9 +3,7 @@ package com.efgh.avraelayout;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.css.Themes;
 import com.efgh.avraelayout.ui.sections.Header;
-import com.efgh.avraelayout.ui.sections.footer.RollBar;
 import com.efgh.avraelayout.ui.tabs.Attacks;
-import com.efgh.avraelayout.ui.tabs.RollableTab;
 import com.efgh.avraelayout.ui.tabs.Spells;
 import com.efgh.avraelayout.ui.tabs.attributes.AttributesTab;
 import com.efgh.avraelayout.ui.tabs.custom.CustomExpressionTab;
@@ -19,7 +17,10 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -33,7 +34,6 @@ import static javafx.stage.Screen.getPrimary;
 public class Rollverlay extends Application {
 
     private static JFXTabPane tabPane = new JFXTabPane();
-    private static RollBar footerBar = new RollBar();
     private static BorderPane APP_CONTAINER = new BorderPane();
 
     private Themes selectedTheme = Themes.TRADITIONAL;
@@ -51,18 +51,12 @@ public class Rollverlay extends Application {
     @Override
     public void start(Stage primaryStage) {
         setParentWindowProperties(APP_CONTAINER, primaryStage);
+        loadConfiguration();
+        fillApplicationTabs();
+        loadTheme();
 
         APP_CONTAINER.setTop(new Header(primaryStage));
-        try {
-            ConfigGateway.initializeConfiguration();
-            selectedTheme = ConfigGateway.getConfiguredTheme();
-        } catch (IOException e) {
-            showSnackBar("ERROR READING SAVED CONFIGURATION", true);
-        }
-
-        StackPane centerPane = new StackPane();
-        centerPane.getChildren().add(getContentPane());
-        APP_CONTAINER.setCenter(centerPane);
+        APP_CONTAINER.setCenter(getContentPane());
 
         Scene scene = new Scene(APP_CONTAINER, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().addAll(selectedTheme.getCssList());
@@ -70,26 +64,27 @@ public class Rollverlay extends Application {
         primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
         primaryStage.setY(getPrimary().getVisualBounds().getMinY() + getPrimary().getVisualBounds().getHeight() - SCREEN_HEIGHT);
         primaryStage.setScene(scene);
+
+
         primaryStage.show();
     }
 
-    private GridPane getContentPane(){
-        fillApplicationTabs();
-        GridPane contentPane = new GridPane();
-
-        ColumnConstraints column0 = new ColumnConstraints(100,100, Double.MAX_VALUE);
-        column0.setHgrow(Priority.ALWAYS);
-
-        RowConstraints row0 = new RowConstraints(100, 100, Double.MAX_VALUE);
-        row0.setVgrow(Priority.ALWAYS);
-
-        contentPane.getColumnConstraints().addAll(column0);
-        contentPane.getRowConstraints().addAll(row0);
-
-        contentPane.add(tabPane, 0, 0, 2, 1);
-        contentPane.add(footerBar, 0, 1, 1, 1);
-
+    private StackPane getContentPane() {
+        StackPane contentPane = new StackPane();
+        contentPane.getChildren().add(tabPane);
         return contentPane;
+    }
+
+    private void loadConfiguration() {
+        try {
+            ConfigGateway.initializeConfiguration();
+        } catch (IOException e) {
+            showSnackBar("ERROR READING SAVED CONFIGURATION", true);
+        }
+    }
+
+    private void loadTheme() {
+        selectedTheme = ConfigGateway.getConfiguredTheme();
     }
 
     private void fillApplicationTabs() {
@@ -113,10 +108,6 @@ public class Rollverlay extends Application {
         });
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setAlwaysOnTop(true);
-    }
-
-    public static String getRollExpression(String selectableModifiers, String manualModifiers) {
-        return ((RollableTab) tabPane.getSelectionModel().getSelectedItem()).getRollExpression(selectableModifiers, manualModifiers);
     }
 
     public static void showSnackBar(String message, boolean isWarning) {

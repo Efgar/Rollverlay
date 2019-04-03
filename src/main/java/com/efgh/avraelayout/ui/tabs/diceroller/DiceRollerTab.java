@@ -3,17 +3,14 @@ package com.efgh.avraelayout.ui.tabs.diceroller;
 import com.efgh.avraelayout.entities.DiceRoll;
 import com.efgh.avraelayout.persistence.ConfigGateway;
 import com.efgh.avraelayout.ui.components.ConfirmationDialog;
-import com.efgh.avraelayout.ui.tabs.RollableTab;
+import com.efgh.avraelayout.ui.tabs.RollableWithModsTab;
 import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
 import com.efgh.avraelayout.ui.tabs.expresionbuilders.SimpleRollingExpressionStrategy;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -21,10 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DiceRollerTab extends RollableTab {
+public class DiceRollerTab extends RollableWithModsTab {
     private FlowPane savedRollsButtons = new FlowPane();
     private List<DiceRoll> diceRolls = ConfigGateway.getDiceRolls();
-
     private List<DiePanel> dice = new ArrayList<>();
 
     private DiePanel d2 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d2.png")), 2);
@@ -36,12 +32,8 @@ public class DiceRollerTab extends RollableTab {
     private DiePanel d20 = new DiePanel(new Image(getClass().getResourceAsStream("/img/die/d20.png")), 20);
 
     public DiceRollerTab() {
-        setText("Dice Roller");
-        VBox tabContent = new VBox();
-        tabContent.setPrefHeight(Double.MAX_VALUE);
-        addDiceButtonsPane(tabContent);
-        addDiceOptionsPane(tabContent);
-        setContent(tabContent);
+        setText("Dice");
+        initialize();
     }
 
     private void createDiceButtons() {
@@ -143,6 +135,7 @@ public class DiceRollerTab extends RollableTab {
         confirmationDialog.setOnAcceptAction(e -> {
             diceRolls.remove(diceRoll);
             savedRollsButtons.getChildren().remove(savedRollBtn);
+            ConfigGateway.updateConfigurationFile();
         });
         confirmationDialog.show();
     }
@@ -167,5 +160,12 @@ public class DiceRollerTab extends RollableTab {
 
     protected RollingExpressionStrategy getRollingExpressionStrategy() {
         return new SimpleRollingExpressionStrategy();
+    }
+
+    protected Pane getTabContentPane() {
+        VBox tabContent = new VBox();
+        addDiceButtonsPane(tabContent);
+        addDiceOptionsPane(tabContent);
+        return tabContent;
     }
 }

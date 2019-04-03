@@ -1,18 +1,23 @@
 package com.efgh.avraelayout.ui.tabs.skills;
 
 import com.efgh.avraelayout.entities.Attribute;
-import com.efgh.avraelayout.ui.tabs.RollableTab;
+import com.efgh.avraelayout.ui.tabs.RollableWithModsTab;
 import com.efgh.avraelayout.ui.tabs.expresionbuilders.AttributesRollingExpressionStrategy;
 import com.efgh.avraelayout.ui.tabs.expresionbuilders.RollingExpressionStrategy;
 import javafx.geometry.Orientation;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
-public class SkillsTab extends RollableTab {
+public class SkillsTab extends RollableWithModsTab {
     private SkillPanelGroup skills = new SkillPanelGroup();
 
     public SkillsTab() {
         setText("Skills");
+        fillSkillButtons();
+        initialize();
+    }
 
+    private void fillSkillButtons() {
         skills.addSkillButton("Athletics", Attribute.STR);
 
         skills.addSkillButton("Acrobatics", Attribute.DEX);
@@ -35,13 +40,15 @@ public class SkillsTab extends RollableTab {
         skills.addSkillButton("Intimidation", Attribute.CHA);
         skills.addSkillButton("Performance", Attribute.CHA);
         skills.addSkillButton("Persuasion", Attribute.CHA);
+        skills.sortSkills();
+    }
 
+    protected Pane getTabContentPane() {
         FlowPane attributesBox = new FlowPane();
         attributesBox.getStyleClass().add("attributes-box");
         attributesBox.setOrientation(Orientation.VERTICAL);
         attributesBox.getChildren().addAll(skills.getAttributePanels());
-
-        setContent(attributesBox);
+        return attributesBox;
     }
 
     protected String getBaseRollExpression() {
