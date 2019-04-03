@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ConfigGateway {
     private static Properties appProperties = new Properties();
     private static final String appConfigPath = "rollverlay.properties";
-    private static final String SEPARATOR = ";";
+    private static final String SEPARATOR = "@@@";
 
     private static final String SAVED_ROLLS_PROPERTY = "com.efgh.rollverlay.storage.rolls";
     private static final String SAVED_EXPRESSIONS_PROPERTY = "com.efgh.rollverlay.storage.expressions";

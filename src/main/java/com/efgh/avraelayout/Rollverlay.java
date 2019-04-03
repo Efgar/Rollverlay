@@ -17,6 +17,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -60,11 +61,7 @@ public class Rollverlay extends Application {
 
         Scene scene = new Scene(APP_CONTAINER, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().addAll(selectedTheme.getCssList());
-
-        primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
-        primaryStage.setY(getPrimary().getVisualBounds().getMinY() + getPrimary().getVisualBounds().getHeight() - SCREEN_HEIGHT);
         primaryStage.setScene(scene);
-
 
         primaryStage.show();
     }
@@ -108,6 +105,9 @@ public class Rollverlay extends Application {
         });
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setAlwaysOnTop(true);
+        primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
+        primaryStage.setY(getPrimary().getVisualBounds().getMinY() + getPrimary().getVisualBounds().getHeight() - SCREEN_HEIGHT);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/AppIcon.png")));
     }
 
     public static void showSnackBar(String message, boolean isWarning) {

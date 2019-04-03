@@ -6,6 +6,7 @@ import java.util.List;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class DiceRoll {
+    private String SEPARATOR = "___";
     private String rollName;
 
     private String d2;
@@ -17,12 +18,12 @@ public class DiceRoll {
     private String d20;
 
     /**
-     * Initialize a dice roll given a string with the format "Rollname,d2,d4,d6,d8,d10,d12,d20"
+     * Initialize a dice roll given a string with the format "Rollname___d2___d4___d6___d8___d10___d12___d20"
      *
      * @param savedRoll String containing the dice roll to initialize
      */
     public DiceRoll(String savedRoll) {
-        String splitSavedRoll[] = savedRoll.split(",", -1);
+        String splitSavedRoll[] = savedRoll.split(SEPARATOR, -1);
         this.rollName = splitSavedRoll[0];
         this.d2 = splitSavedRoll[1];
         this.d4 = splitSavedRoll[2];
@@ -49,7 +50,7 @@ public class DiceRoll {
      * @return String containing the dice roll
      */
     public String getSavedRollString(){
-        return String.join(",", rollName, d2, d4, d6, d8, d10, d12, d20);
+        return String.join(SEPARATOR, rollName, d2, d4, d6, d8, d10, d12, d20);
     }
 
     public String getRollExpression(){

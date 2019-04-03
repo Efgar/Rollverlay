@@ -23,10 +23,10 @@ public enum Themes {
     public List<String> getCssList() {
         List<String> cssList = new ArrayList<>();
         try {
-            Path cssThemesFolderPath = Paths.get(getClass().getResource(String.format("/css/themes/root-%s.css", folder)).toURI());
+            Path cssThemesFolderPath = Paths.get(getClass().getResource(String.format("/styles/themes/root-%s.css", folder)).toURI());
             cssList.add(cssThemesFolderPath.toUri().toURL().toExternalForm());
 
-            Path cssFolderPath = Paths.get(getClass().getResource("/css/general/").toURI());
+            Path cssFolderPath = Paths.get(getClass().getResource("/styles/general/").toURI());
             Stream<Path> cssFiles = Files.list(cssFolderPath);
             for (Path cssFile : cssFiles.collect(Collectors.toList())){
                 cssList.add(cssFile.toUri().toURL().toExternalForm());
