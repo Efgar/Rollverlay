@@ -84,6 +84,20 @@ public class ConfigGateway {
         return savedExpressions.stream().map(CustomExpression::getSavedExpressionString).filter(StringUtils::isNotEmpty).collect(Collectors.joining(SEPARATOR));
     }
 
+    public static List<CustomExpression> getAttackRollExpressions() {
+        return savedExpressions;
+    }
+
+    public static void addAttackRollExpression(CustomExpression customExpression) throws IOException {
+        customExpression.validate();
+        savedExpressions.add(customExpression);
+        updateConfigurationFile();
+    }
+
+    private static String getAttackSavingString() {
+        return savedExpressions.stream().map(CustomExpression::getSavedExpressionString).filter(StringUtils::isNotEmpty).collect(Collectors.joining(SEPARATOR));
+    }
+
     public static void updateConfigurationFile() {
         try {
             appProperties.setProperty(SAVED_ROLLS_PROPERTY, getDiceRollSavingString());

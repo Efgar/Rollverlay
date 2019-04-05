@@ -1,4 +1,4 @@
-package com.efgh.avraelayout.ui.tabs.custom;
+package com.efgh.avraelayout.ui.tabs.attacks;
 
 import com.efgh.avraelayout.entities.CustomExpression;
 import com.efgh.avraelayout.persistence.ConfigGateway;
@@ -15,30 +15,30 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-public class CustomExpressionTab extends Tab {
-    private FlowPane savedExpressionsButtons = new FlowPane();
-    private List<CustomExpression> savedExpressions = ConfigGateway.getCustomRollExpressions();
+public class AttacksTab extends Tab {
+    private FlowPane attacksPannel = new FlowPane();
+    private List<CustomExpression> savedAttacks = ConfigGateway.getAttackRollExpressions();
 
-    public CustomExpressionTab() {
-        setText("Custom");
+    public AttacksTab() {
+        setText("Attacks");
 
-        HBox expressionButtons = new HBox();
-        expressionButtons.getStyleClass().add("hbox");
-        expressionButtons.setPrefHeight(Double.MAX_VALUE);
+        HBox attackContainer = new HBox();
+        attackContainer.getStyleClass().add("hbox");
+        attackContainer.setPrefHeight(Double.MAX_VALUE);
 
-        JFXButton saveRollButton = new JFXButton("Add");
-        saveRollButton.getStyleClass().add("secondary-action");
-        saveRollButton.setOnMouseClicked(e -> createCustomExpression());
-        saveRollButton.setMaxWidth(Double.MAX_VALUE);
-        saveRollButton.setPrefWidth(60);
+        JFXButton saveAttackButton = new JFXButton("Add");
+        saveAttackButton.getStyleClass().add("secondary-action");
+        saveAttackButton.setOnMouseClicked(e -> createCustomExpression());
+        saveAttackButton.setMaxWidth(Double.MAX_VALUE);
+        saveAttackButton.setPrefWidth(60);
 
         VBox optionButtons = new VBox();
         optionButtons.getStyleClass().add("vbox");
-        optionButtons.getChildren().addAll(saveRollButton);
+        optionButtons.getChildren().addAll(saveAttackButton);
 
-        expressionButtons.getChildren().add(getSavedExpressionsPanel());
-        expressionButtons.getChildren().add(optionButtons);
-        setContent(expressionButtons);
+        attackContainer.getChildren().add(getAttacksListPanel());
+        attackContainer.getChildren().add(optionButtons);
+        setContent(attackContainer);
     }
 
     private void createCustomExpression() {
@@ -47,16 +47,16 @@ public class CustomExpressionTab extends Tab {
         savePopup.show();
     }
 
-    private ScrollPane getSavedExpressionsPanel() {
+    private ScrollPane getAttacksListPanel() {
         populateSavedExpressions();
-        return Utils.buildBaseScrollablePane(savedExpressionsButtons);
+        return Utils.buildBaseScrollablePane(attacksPannel);
     }
 
     private void populateSavedExpressions() {
-        savedExpressionsButtons.getChildren().clear();
-        savedExpressions.forEach(customExpression -> {
+        attacksPannel.getChildren().clear();
+        savedAttacks.forEach(customExpression -> {
             JFXButton savedRollBtn = createSavedExpressionBtn(customExpression);
-            savedExpressionsButtons.getChildren().add(savedRollBtn);
+            attacksPannel.getChildren().add(savedRollBtn);
         });
     }
 
@@ -76,8 +76,8 @@ public class CustomExpressionTab extends Tab {
     private void removeCustomExpressionFromSaved(CustomExpression customExpression, JFXButton savedExpressionBtn) {
         ConfirmationDialog confirmationDialog = new ConfirmationDialog(String.format("Delete saved expression (%s)", customExpression.getExpressionName()), "Are you sure you want to delete this saved expression?", true);
         confirmationDialog.setOnAcceptAction(e -> {
-            savedExpressions.remove(customExpression);
-            savedExpressionsButtons.getChildren().remove(savedExpressionBtn);
+            savedAttacks.remove(customExpression);
+            attacksPannel.getChildren().remove(savedExpressionBtn);
             ConfigGateway.updateConfigurationFile();
         });
         confirmationDialog.show();
