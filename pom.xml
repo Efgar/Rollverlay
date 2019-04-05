@@ -81,8 +81,6 @@
                                 <mkdir dir="${temporal_output_directory}/"/>
                                 <mkdir dir="${output_directory}/"/>
                                 <mkdir dir="${temporal_output_directory}"/>
-                                <copy file="src/main/resources/img/AppIcon.ico"
-                                      tofile="${temporal_output_directory}/AppIcon.ico"/>
                                 <copy file="${project.build.directory}/${project.artifactId}.jar"
                                       tofile="${temporal_output_directory}/${project.artifactId}.jar"/>
                             </tasks>
@@ -128,9 +126,9 @@
                         <configuration>
                             <headerType>gui</headerType>
                             <outfile>${temporal_output_directory}/${project.artifactId}.exe</outfile>
-                            <jar>${project.artifactId}.jar</jar>
+                            <jar>${temporal_output_directory}/${project.artifactId}.jar</jar>
                             <errTitle>${project.name}</errTitle>
-                            <dontWrapJar>true</dontWrapJar>
+                            <dontWrapJar>false</dontWrapJar>
                             <stayAlive>false</stayAlive>
                             <icon>src/main/resources/img/AppIcon.ico</icon>
                             <classPath>
