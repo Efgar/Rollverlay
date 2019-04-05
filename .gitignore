@@ -6,6 +6,7 @@ logs/*
 **/output/*
 */output_tmp/*
 */PolnalServer.nsh
+*.log
 
 ##########################
 ## Java

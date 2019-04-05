@@ -3,9 +3,8 @@ package com.efgh.avraelayout.persistence;
 import com.efgh.avraelayout.Rollverlay;
 import com.efgh.avraelayout.entities.CustomExpression;
 import com.efgh.avraelayout.entities.DiceRoll;
-import com.efgh.avraelayout.ui.css.Themes;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -25,10 +24,15 @@ public class ConfigGateway {
     private static List<DiceRoll> savedRolls = new ArrayList<>();
     private static List<CustomExpression> savedExpressions = new ArrayList<>();
 
-    public static void initializeConfiguration() throws IOException {
-        appProperties.load(new FileInputStream(appConfigPath));
-        initializeSavedRolls();
-        initializeSavedExpressions();
+    public static void initializeConfiguration() {
+        try {
+            appProperties.load(new FileInputStream(appConfigPath));
+            initializeSavedRolls();
+            initializeSavedExpressions();
+        } catch (IOException e) {
+            Logger.getRootLogger().error("ERROR READING SAVED CONFIGURATION", e);
+            Rollverlay.showSnackBar("ERROR READING SAVED CONFIGURATION", true);
+        }
     }
 
     private static void initializeSavedRolls() {
@@ -49,8 +53,8 @@ public class ConfigGateway {
         }
     }
 
-    public static Themes getConfiguredTheme(){
-        return ObjectUtils.defaultIfNull(Themes.getTheme(appProperties.getProperty("com.efgh.rollverlay.theme")), Themes.TRADITIONAL);
+    public static String getConfiguredTheme() {
+        return appProperties.getProperty("com.efgh.rollverlay.theme");
     }
 
     public static List<DiceRoll> getDiceRolls() {

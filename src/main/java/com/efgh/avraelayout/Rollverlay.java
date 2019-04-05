@@ -9,6 +9,7 @@ import com.efgh.avraelayout.ui.tabs.attributes.AttributesTab;
 import com.efgh.avraelayout.ui.tabs.custom.CustomExpressionTab;
 import com.efgh.avraelayout.ui.tabs.diceroller.DiceRollerTab;
 import com.efgh.avraelayout.ui.tabs.skills.SkillsTab;
+import com.efgh.avraelayout.utils.LoggerConfigurationHelper;
 import com.jfoenix.controls.JFXSnackbar;
 import com.jfoenix.controls.JFXTabPane;
 import de.jensd.fx.glyphs.GlyphIcon;
@@ -28,16 +29,13 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-
 import static javafx.stage.Screen.getPrimary;
 
 public class Rollverlay extends Application {
-
     private static JFXTabPane tabPane = new JFXTabPane();
     private static BorderPane APP_CONTAINER = new BorderPane();
 
-    private Themes selectedTheme = Themes.TRADITIONAL;
+    private Themes selectedTheme = Themes.CLASSIC;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -46,6 +44,7 @@ public class Rollverlay extends Application {
     private int SCREEN_HEIGHT = 250;
 
     public static void main(String[] args) {
+        LoggerConfigurationHelper.initializeLogger();
         launch(args);
     }
 
@@ -73,15 +72,11 @@ public class Rollverlay extends Application {
     }
 
     private void loadConfiguration() {
-        try {
-            ConfigGateway.initializeConfiguration();
-        } catch (IOException e) {
-            showSnackBar("ERROR READING SAVED CONFIGURATION", true);
-        }
+        ConfigGateway.initializeConfiguration();
     }
 
     private void loadTheme() {
-        selectedTheme = ConfigGateway.getConfiguredTheme();
+        selectedTheme = Themes.getConfiguredTheme();
     }
 
     private void fillApplicationTabs() {
@@ -94,7 +89,7 @@ public class Rollverlay extends Application {
         tabPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
-    private void setParentWindowProperties(Pane root, Stage primaryStage){
+    private void setParentWindowProperties(Pane root, Stage primaryStage) {
         root.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
