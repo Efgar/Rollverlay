@@ -3,6 +3,7 @@
 ##########################
 logs/*
 **/output_tmp/*
+/output_tmp/
 *.log
 
 ##########################
@@ -11,6 +12,7 @@ logs/*
 *.class
 .mtj.tmp/
 *.jar
+!output/Rollverlay/Rollverlay.jar
 *.war
 *.ear
 hs_err_pid*
