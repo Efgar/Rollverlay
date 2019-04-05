@@ -26,7 +26,7 @@ public class CustomExpressionTab extends Tab {
         expressionButtons.getStyleClass().add("hbox");
         expressionButtons.setPrefHeight(Double.MAX_VALUE);
 
-        JFXButton saveRollButton = new JFXButton("Save");
+        JFXButton saveRollButton = new JFXButton("Add");
         saveRollButton.getStyleClass().add("secondary-action");
         saveRollButton.setOnMouseClicked(e -> createCustomExpression());
         saveRollButton.setMaxWidth(Double.MAX_VALUE);

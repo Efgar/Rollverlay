@@ -1,11 +1,8 @@
 ##########################
-## Polnal
+## Rollverlay
 ##########################
 logs/*
-**/shutdown.pid
-**/output/*
-*/output_tmp/*
-*/PolnalServer.nsh
+**/output_tmp/*
 *.log
 
 ##########################

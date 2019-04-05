@@ -25,7 +25,6 @@ public enum Themes {
         List<String> cssList = new ArrayList<>();
         try {
             for (String fileName : getResourceListing("styles/themes/")) {
-                logger.debug("Theme StyleSheets: " + fileName);
                 if (fileName.endsWith(name().toLowerCase() + ".css")) {
                     cssList.add(getClass().getClassLoader().getResource(fileName).toURI().toString());
                 }
@@ -36,9 +35,6 @@ public enum Themes {
             }
         } catch (Exception e) {
             logger.error("Can not load CSS files into the system", e);
-        }
-        for (String cssFile : cssList) {
-            logger.info("Loading StyleSheet: " + cssFile);
         }
         return cssList;
     }

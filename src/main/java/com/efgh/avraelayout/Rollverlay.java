@@ -102,7 +102,7 @@ public class Rollverlay extends Application {
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setX(getPrimary().getVisualBounds().getMinX() + getPrimary().getVisualBounds().getWidth() - SCREEN_WIDTH);
         primaryStage.setY(getPrimary().getVisualBounds().getMinY() + getPrimary().getVisualBounds().getHeight() - SCREEN_HEIGHT);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/AppIcon.png")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/AppIcon.ico")));
     }
 
     public static void showSnackBar(String message, boolean isWarning) {
