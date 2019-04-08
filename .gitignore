@@ -5,6 +5,7 @@ logs/*
 **/output_tmp/*
 /output_tmp/
 *.log
+**/dependency-reduced-pom.xml
 
 ##########################
 ## Java
